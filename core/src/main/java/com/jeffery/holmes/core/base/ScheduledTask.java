@@ -12,6 +12,10 @@ public abstract class ScheduledTask {
         scheduledExecutorService.scheduleAtFixedRate(getTask(), getInitialDelay(), getPeriod(), getTimeUnit());
     }
 
+    public void shutdown() {
+        scheduledExecutorService.shutdown();
+    }
+
     protected abstract Runnable getTask();
 
     protected abstract long getInitialDelay();

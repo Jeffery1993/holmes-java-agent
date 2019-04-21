@@ -3,7 +3,7 @@ package com.jeffery.holmes.premain.util;
 import java.net.URL;
 import java.util.jar.JarFile;
 
-public class PathManager {
+public class JarFileManager {
 
     public static JarFile getCommonJarFile() {
         // TODO

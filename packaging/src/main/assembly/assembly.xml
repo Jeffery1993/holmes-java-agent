@@ -26,5 +26,10 @@
             <source>../core/target/holmes-core-jar-with-dependencies.jar</source>
             <destName>holmes-core.jar</destName>
         </file>
+
+        <file>
+            <source>../config/agent.config</source>
+            <fileMode>0755</fileMode>
+        </file>
     </files>
 </assembly>

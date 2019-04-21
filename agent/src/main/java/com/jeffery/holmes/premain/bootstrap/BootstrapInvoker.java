@@ -15,7 +15,7 @@ public class BootstrapInvoker implements Bootstrap {
     }
 
     @Override
-    public void boot(final Instrumentation instrumentation) {
+    public void boot(final String args, final Instrumentation instrumentation) {
         Class<?> bootstrapClazz = null;
         Object bootstrapInstance = null;
         ContextClassloaderExecutor contextClassloaderExecutor = new ContextClassloaderExecutor(classLoader);
@@ -33,7 +33,7 @@ public class BootstrapInvoker implements Bootstrap {
         contextClassloaderExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                bootstrap.boot(instrumentation);
+                bootstrap.boot(args, instrumentation);
             }
         });
     }

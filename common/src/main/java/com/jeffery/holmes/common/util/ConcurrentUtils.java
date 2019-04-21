@@ -5,53 +5,53 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class ConcurrentUtils {
 
-    public static void setMaxConcurrently(AtomicInteger target, int value) {
+    public static boolean setMaxConcurrently(AtomicInteger target, int value) {
         for (; ; ) {
             int expect = target.get();
             if (expect >= value) {
-                break;
+                return false;
             } else {
                 if (target.compareAndSet(expect, value)) {
-                    break;
+                    return true;
                 }
             }
         }
     }
 
-    public static void setMaxConcurrently(AtomicLong target, long value) {
-        for (; ; ) {
-            long expect = target.get();
-            if (expect >= value) {
-                break;
-            } else {
-                if (target.compareAndSet(expect, value)) {
-                    break;
-                }
-            }
-        }
-    }
-
-    public static void setMinConcurrently(AtomicInteger target, int value) {
+    public static boolean setMinConcurrently(AtomicInteger target, int value) {
         for (; ; ) {
             int expect = target.get();
             if (expect <= value) {
-                break;
+                return false;
             } else {
                 if (target.compareAndSet(expect, value)) {
-                    break;
+                    return true;
                 }
             }
         }
     }
 
-    public static void setMinConcurrently(AtomicLong target, long value) {
+    public static boolean setMaxConcurrently(AtomicLong target, long value) {
+        for (; ; ) {
+            long expect = target.get();
+            if (expect >= value) {
+                return false;
+            } else {
+                if (target.compareAndSet(expect, value)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    public static boolean setMinConcurrently(AtomicLong target, long value) {
         for (; ; ) {
             long expect = target.get();
             if (expect <= value) {
-                break;
+                return false;
             } else {
                 if (target.compareAndSet(expect, value)) {
-                    break;
+                    return true;
                 }
             }
         }

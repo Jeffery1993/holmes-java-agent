@@ -1,5 +1,7 @@
 package com.jeffery.holmes.common.trace;
 
+import java.util.Map;
+
 public class SpanEventData {
 
     private String traceId;
@@ -14,12 +16,14 @@ public class SpanEventData {
 
     private String className;
     private String methodName;
-    private String methodType;
+    private String eventType;
     private String argument;
 
     private boolean error;
     private String errorType;
     private String errorMessage;
+
+    private Map<String, Object> parameters;
 
     public String getTraceId() {
         return traceId;
@@ -93,12 +97,12 @@ public class SpanEventData {
         this.methodName = methodName;
     }
 
-    public String getMethodType() {
-        return methodType;
+    public String getEventType() {
+        return eventType;
     }
 
-    public void setMethodType(String methodType) {
-        this.methodType = methodType;
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
 
     public String getArgument() {
@@ -131,6 +135,14 @@ public class SpanEventData {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters = parameters;
     }
 
 }

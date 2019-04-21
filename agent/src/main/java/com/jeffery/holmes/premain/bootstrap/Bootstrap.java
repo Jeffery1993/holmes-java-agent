@@ -4,6 +4,6 @@ import java.lang.instrument.Instrumentation;
 
 public interface Bootstrap {
 
-    void boot(Instrumentation instrumentation);
+    void boot(String args, Instrumentation instrumentation);
 
 }

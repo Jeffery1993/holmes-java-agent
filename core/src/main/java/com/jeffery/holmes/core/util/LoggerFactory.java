@@ -1,4 +1,4 @@
-package com.jeffery.holmes.common.util;
+package com.jeffery.holmes.core.util;
 
 import java.io.File;
 import java.util.logging.FileHandler;
@@ -28,6 +28,7 @@ public class LoggerFactory {
     public static Logger getLogger(Class<?> clazz) {
         Logger logger = Logger.getLogger(clazz.getName());
         logger.addHandler(fileHandler);
+        logger.setUseParentHandlers(false);
         return logger;
     }
 
