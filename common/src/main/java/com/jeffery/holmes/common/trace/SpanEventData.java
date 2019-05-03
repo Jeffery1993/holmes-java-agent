@@ -6,6 +6,7 @@ public class SpanEventData {
 
     private String traceId;
     private String spanId;
+    private String nextSpanId;
     private String spanEventId;
 
     private String clusterId;
@@ -39,6 +40,14 @@ public class SpanEventData {
 
     public void setSpanId(String spanId) {
         this.spanId = spanId;
+    }
+
+    public String getNextSpanId() {
+        return nextSpanId;
+    }
+
+    public void setNextSpanId(String nextSpanId) {
+        this.nextSpanId = nextSpanId;
     }
 
     public String getSpanEventId() {

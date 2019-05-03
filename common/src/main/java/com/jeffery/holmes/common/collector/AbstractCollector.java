@@ -9,7 +9,22 @@ import java.util.Map;
 
 public abstract class AbstractCollector implements Collector<Aggregator> {
 
+    protected String name;
+    protected boolean enabled = true;
     protected List<Aggregator> aggregators = new ArrayList<Aggregator>();
+
+    @Override
+    public String getName() {
+        if (this.name == null) {
+            this.name = this.getClass().getSimpleName().replace("Collector", "");
+        }
+        return this.name;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     @Override
     public Collector add(Aggregator aggregator) {

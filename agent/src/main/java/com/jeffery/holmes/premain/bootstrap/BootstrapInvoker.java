@@ -3,6 +3,7 @@ package com.jeffery.holmes.premain.bootstrap;
 import com.jeffery.holmes.premain.classloader.ContextClassloaderExecutor;
 
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Method;
 
 public class BootstrapInvoker implements Bootstrap {
 
@@ -16,24 +17,27 @@ public class BootstrapInvoker implements Bootstrap {
 
     @Override
     public void boot(final String args, final Instrumentation instrumentation) {
-        Class<?> bootstrapClazz = null;
-        Object bootstrapInstance = null;
+        final Class<?> bootstrapClazz;
+        final Object bootstrapInstance;
+        final Method bootMethod;
         ContextClassloaderExecutor contextClassloaderExecutor = new ContextClassloaderExecutor(classLoader);
         try {
             bootstrapClazz = classLoader.loadClass(BOOTSTRAP_IMPL_CLASS);
             bootstrapInstance = bootstrapClazz.newInstance();
+            bootMethod = bootstrapClazz.getMethod("boot", String.class, Instrumentation.class);
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-        if (!(bootstrapInstance instanceof Bootstrap)) {
-            return;
-        }
-        final Bootstrap bootstrap = (Bootstrap) bootstrapInstance;
+
         contextClassloaderExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                bootstrap.boot(args, instrumentation);
+                try {
+                    bootMethod.invoke(bootstrapInstance, args, instrumentation);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

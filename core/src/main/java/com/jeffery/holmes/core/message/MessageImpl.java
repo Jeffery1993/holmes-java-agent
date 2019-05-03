@@ -1,5 +1,7 @@
 package com.jeffery.holmes.core.message;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +49,16 @@ public class MessageImpl implements Message {
 
     public void setBody(Object body) {
         this.body = body;
+    }
+
+    @Override
+    public byte[] getHeaderAsBytes() {
+        return JSON.toJSONBytes(header);
+    }
+
+    @Override
+    public byte[] getBodyAsBytes() {
+        return JSON.toJSONBytes(body);
     }
 
 }

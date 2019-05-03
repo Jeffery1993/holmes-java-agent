@@ -10,7 +10,7 @@ public class TraceCollector {
     private static final int TRACE_QUEUE_SIZE = 1024;
     public static final BlockingQueue<Object> TRACE_BLOCKING_QUEUE = new ArrayBlockingQueue<Object>(TRACE_QUEUE_SIZE);
 
-    public static void start(String className, String methodName, String eventType, String traceId, String spanId, String url, String method) {
+    public static void start(String className, String methodName, String eventType, String traceId, String spanId, String spanEventId, String url, String method) {
         SpanEvent spanEvent = SPAN_EVENT_THREAD_LOCAL.get();
         if (spanEvent == null) {
             // 创建Span
@@ -35,21 +35,27 @@ public class TraceCollector {
             spanEvent.setError(true);
             spanEvent.setErrorType(throwable.getClass().getName());
             spanEvent.setErrorMessage(throwable.getMessage());
+            Span span = spanEvent.getSpan();
+            span.setError(true);
+            span.setErrorType(throwable.getClass().getName());
+            span.setErrorMessage(throwable.getMessage());
         }
     }
 
-    public static void end(int code) {
+    public static void end(int code, boolean hasNextSpan) {
         SpanEvent spanEvent = SPAN_EVENT_THREAD_LOCAL.get();
         if (spanEvent != null) {
-            spanEvent.setUsedTime(System.currentTimeMillis() - spanEvent.getStartTime());
+            Span span = spanEvent.getSpan();
+            long usedTime = System.currentTimeMillis() - spanEvent.getStartTime();
+            if (hasNextSpan) {
+                spanEvent.setNextSpanId(span.getNextSpanId());
+            }
+            spanEvent.setUsedTime(usedTime);
             if (spanEvent.getParent() == null) {
-                Span span = spanEvent.getSpan();
-                span.setUsedTime(System.currentTimeMillis() - span.getStartTime());
+                span.setUsedTime(usedTime);
                 span.setCode(code);
                 SPAN_EVENT_THREAD_LOCAL.set(null);
-                if ("1".equals(span.getSpanId())) {
-                    TRACE_BLOCKING_QUEUE.offer(span);
-                }
+                TRACE_BLOCKING_QUEUE.offer(span);
             } else {
                 SPAN_EVENT_THREAD_LOCAL.set(spanEvent.getParent());
             }

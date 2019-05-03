@@ -3,7 +3,11 @@ package com.jeffery.holmes.core;
 import com.jeffery.holmes.core.collect.CollectTask;
 import com.jeffery.holmes.core.collect.DataQueueService;
 import com.jeffery.holmes.core.collect.TraceQueueService;
+import com.jeffery.holmes.core.plugin.httpclient.InternalHttpClientTransformer;
+import com.jeffery.holmes.core.plugin.mysql.PreparedStatementTransformer;
+import com.jeffery.holmes.core.plugin.url.StandardHostValveTransformer;
 import com.jeffery.holmes.core.transformer.CompoundTransformer;
+import com.jeffery.holmes.core.transformer.TransformerManager;
 import com.jeffery.holmes.core.util.ConfigManager;
 import com.jeffery.holmes.core.util.LoggerFactory;
 import com.jeffery.holmes.premain.bootstrap.Bootstrap;
@@ -23,6 +27,9 @@ public class BootstrapImpl implements Bootstrap {
         ConfigManager.init(args);
 
         // 增加字节码增强器
+        TransformerManager.register(new StandardHostValveTransformer());
+        TransformerManager.register(new InternalHttpClientTransformer());
+        TransformerManager.register(new PreparedStatementTransformer());
         instrumentation.addTransformer(new CompoundTransformer(), true);
 
         // 启动任务

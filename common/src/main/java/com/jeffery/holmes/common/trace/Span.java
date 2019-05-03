@@ -23,4 +23,9 @@ public class Span extends SpanData {
         return new StringBuilder().append(spanId).append("-").append(count.incrementAndGet()).toString();
     }
 
+    public String getNextSpanId() {
+        String spanId = (this.getSpanId() == null) ? "1" : this.getSpanId();
+        return new StringBuilder().append(spanId).append("-").append(count.get() + 1).toString();
+    }
+
 }

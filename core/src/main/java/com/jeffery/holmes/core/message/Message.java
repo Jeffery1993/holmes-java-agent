@@ -10,4 +10,8 @@ public interface Message {
 
     Object getBody();
 
+    byte[] getHeaderAsBytes();
+
+    byte[] getBodyAsBytes();
+
 }

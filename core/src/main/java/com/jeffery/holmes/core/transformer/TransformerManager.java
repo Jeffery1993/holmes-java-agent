@@ -1,6 +1,5 @@
 package com.jeffery.holmes.core.transformer;
 
-import java.lang.instrument.ClassFileTransformer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +29,8 @@ public class TransformerManager {
         }
     }
 
-    public static ClassFileTransformer getMatchedTransformer(String className) {
-        ClassFileTransformer transformer = null;
+    public static HolmesTransformer getMatchedTransformer(String className) {
+        HolmesTransformer transformer = null;
         if ((transformer = ACCURATE_MATCHED_TRANSFORMER_MAP.get(className)) != null) {
             return transformer;
         }

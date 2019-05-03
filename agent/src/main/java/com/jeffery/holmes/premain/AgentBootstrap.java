@@ -10,6 +10,22 @@ import java.util.jar.JarFile;
 public class AgentBootstrap {
 
     public static void premain(String args, Instrumentation inst) {
+        try {
+            main(args, inst);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void agentmain(String args, Instrumentation inst) {
+        try {
+            main(args, inst);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String args, Instrumentation inst) throws Exception {
         // commonJarFile should be appendToBootstrapClassLoaderSearch
         JarFile commonJarFile = JarFileManager.getCommonJarFile();
         inst.appendToBootstrapClassLoaderSearch(commonJarFile);
@@ -20,10 +36,6 @@ public class AgentBootstrap {
         // invoke via reflection and swop the ContextClassloader
         BootstrapInvoker bootstrapInvoker = new BootstrapInvoker(agentClassloader);
         bootstrapInvoker.boot(args, inst);
-    }
-
-    public static void agentmain(String args, Instrumentation inst) {
-        // TODO
     }
 
 }

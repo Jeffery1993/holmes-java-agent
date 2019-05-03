@@ -10,14 +10,16 @@ public class LoggerFactory {
 
     private static FileHandler fileHandler;
 
-    private static final String USER_HOME = System.getProperty("user.home");
     private static final int FILE_LIMIT = 3 * (1 << 20);
     private static final int FILE_COUNT = 3;
-    private static final String FILE_PATTERN = USER_HOME + File.separator + "holmes" + File.separator + "javaagent.log";
 
     static {
+        File logDir = new File(PathManager.LOG_DIR_PATH);
+        if (!logDir.exists()) {
+            logDir.mkdirs();
+        }
         try {
-            fileHandler = new FileHandler(FILE_PATTERN, FILE_LIMIT, FILE_COUNT, true);
+            fileHandler = new FileHandler(PathManager.LOG_FILE_PATH, FILE_LIMIT, FILE_COUNT, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
