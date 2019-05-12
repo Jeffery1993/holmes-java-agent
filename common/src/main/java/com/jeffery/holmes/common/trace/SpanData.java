@@ -1,5 +1,6 @@
 package com.jeffery.holmes.common.trace;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SpanData {
@@ -21,7 +22,7 @@ public class SpanData {
     private String errorType;
     private String errorMessage;
 
-    private Map<String, Object> context;
+    private Map<String, Object> parameters;
 
     public String getTraceId() {
         return traceId;
@@ -119,12 +120,19 @@ public class SpanData {
         this.errorMessage = errorMessage;
     }
 
-    public Map<String, Object> getContext() {
-        return context;
+    public Map<String, Object> getParameters() {
+        return parameters;
     }
 
-    public void setContext(Map<String, Object> context) {
-        this.context = context;
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters = parameters;
+    }
+
+    public void addParameter(String key, Object value) {
+        if (this.parameters == null) {
+            this.parameters = new HashMap<String, Object>();
+        }
+        this.parameters.put(key, value);
     }
 
 }

@@ -1,13 +1,14 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.1"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.1 http://maven.apache.org/xsd/assembly-1.1.1.xsd">
+
     <id>bin</id>
-    <includeBaseDirectory>true</includeBaseDirectory>
     <formats>
         <format>dir</format>
         <format>zip</format>
         <format>tar.gz</format>
     </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
 
     <files>
         <file>
@@ -26,9 +27,13 @@
             <source>../core/target/holmes-core-jar-with-dependencies.jar</source>
             <destName>holmes-core.jar</destName>
         </file>
-        <file>
-            <source>../config/javaagent.config</source>
-            <fileMode>0755</fileMode>
-        </file>
     </files>
+
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources/${env}</directory>
+            <outputDirectory></outputDirectory>
+        </fileSet>
+    </fileSets>
+
 </assembly>

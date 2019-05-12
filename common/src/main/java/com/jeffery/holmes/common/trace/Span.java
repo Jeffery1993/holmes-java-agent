@@ -1,16 +1,16 @@
 package com.jeffery.holmes.common.trace;
 
+import com.jeffery.holmes.common.util.ConfigManager;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Span extends SpanData {
 
     private AtomicInteger count = new AtomicInteger(0);
 
-    public Span() {
-        this.setStartTime(System.currentTimeMillis());
-    }
-
     public Span(String traceId, String spanId, String url, String method) {
+        this.setClusterId(ConfigManager.getClusterId());
+        this.setAppId(ConfigManager.getAppId());
         this.setTraceId(traceId == null ? TraceIdGenerator.generate() : traceId);
         this.setSpanId(spanId == null ? "1" : spanId);
         this.setUrl(url);
@@ -21,11 +21,6 @@ public class Span extends SpanData {
     public String generateNextSpanId() {
         String spanId = (this.getSpanId() == null) ? "1" : this.getSpanId();
         return new StringBuilder().append(spanId).append("-").append(count.incrementAndGet()).toString();
-    }
-
-    public String getNextSpanId() {
-        String spanId = (this.getSpanId() == null) ? "1" : this.getSpanId();
-        return new StringBuilder().append(spanId).append("-").append(count.get() + 1).toString();
     }
 
 }

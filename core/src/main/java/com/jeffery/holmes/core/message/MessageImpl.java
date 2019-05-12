@@ -1,6 +1,8 @@
 package com.jeffery.holmes.core.message;
 
 import com.alibaba.fastjson.JSON;
+import com.jeffery.holmes.common.consts.ConfigConsts;
+import com.jeffery.holmes.common.util.ConfigManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +13,15 @@ public class MessageImpl implements Message {
     private Map<String, Object> header;
     private Object body;
 
-    public MessageImpl() {
+    private static final Map<String, Object> DEFAULT_HEADER = new HashMap<String, Object>();
+
+    static {
+        DEFAULT_HEADER.put(ConfigConsts.CLUSTER_ID, ConfigManager.getClusterId());
+        DEFAULT_HEADER.put(ConfigConsts.APP_ID, ConfigManager.getAppId());
     }
 
     public MessageImpl(int type, Object body) {
-        this(type, new HashMap<String, Object>(), body);
+        this(type, DEFAULT_HEADER, body);
     }
 
     public MessageImpl(int type, Map<String, Object> header, Object body) {

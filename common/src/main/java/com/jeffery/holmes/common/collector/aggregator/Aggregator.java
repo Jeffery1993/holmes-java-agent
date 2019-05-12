@@ -9,8 +9,6 @@ public interface Aggregator {
 
     boolean isEnabled();
 
-    boolean isOverflow();
-
     List<Map<String, Object>> harvest();
 
 }

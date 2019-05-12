@@ -1,5 +1,6 @@
 package com.jeffery.holmes.common.trace;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SpanEventData {
@@ -152,6 +153,13 @@ public class SpanEventData {
 
     public void setParameters(Map<String, Object> parameters) {
         this.parameters = parameters;
+    }
+
+    public void addParameter(String key, Object value) {
+        if (this.parameters == null) {
+            this.parameters = new HashMap<String, Object>();
+        }
+        this.parameters.put(key, value);
     }
 
 }

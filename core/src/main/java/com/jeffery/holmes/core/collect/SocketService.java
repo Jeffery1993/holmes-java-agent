@@ -1,35 +1,25 @@
 package com.jeffery.holmes.core.collect;
 
-import com.jeffery.holmes.core.consts.ConfigConsts;
-import com.jeffery.holmes.core.util.ConfigManager;
+import com.jeffery.holmes.common.util.ConfigManager;
+import com.jeffery.holmes.common.util.LoggerFactory;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 public class SocketService {
 
-    private static String[] serverIps;
-    private static int serverPort;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocketService.class);
+
+    private static String[] serverIps = ConfigManager.getServerIps();
+    private static int serverPort = ConfigManager.getServerPort();
     private static ConnectStatus connectStatus;
     private static SocketEntity socketEntity;
 
-    private static void initConfig() {
-        if (ConfigManager.getProperty(ConfigConsts.serverIps) != null) {
-            serverIps = ConfigManager.getProperty(ConfigConsts.serverIps).split(",");
-        }
-        if (ConfigManager.getProperty(ConfigConsts.serverPort) != null) {
-            try {
-                serverPort = Integer.valueOf(ConfigManager.getProperty(ConfigConsts.serverPort));
-            } catch (Exception e) {
-                // ignore
-            }
-        }
-    }
-
     public static SocketEntity getSocketEntity() {
         if (connectStatus == null) {
-            initConfig();
             connectStatus = ConnectStatus.CONNECTING;
             Socket socket = getSocket(serverIps, serverPort);
             if (socket == null) {
@@ -39,6 +29,7 @@ public class SocketService {
                     socketEntity = new SocketEntity(socket);
                 } catch (IOException e) {
                     connectStatus = ConnectStatus.INCONNECTABLE;
+                    LOGGER.severe("Failed to connect to ips " + Arrays.toString(serverIps) + " port " + serverPort + " with error " + e);
                 }
                 connectStatus = ConnectStatus.CONNECTED;
             }
@@ -55,6 +46,7 @@ public class SocketService {
                 // ignore
             }
             if (socket != null) {
+                LOGGER.severe("Connected to ip " + ip + " port " + serverPort);
                 break;
             }
         }

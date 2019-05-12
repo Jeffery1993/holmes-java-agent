@@ -1,4 +1,4 @@
-package com.jeffery.holmes.core.util;
+package com.jeffery.holmes.common.util;
 
 import java.io.File;
 import java.util.logging.FileHandler;
@@ -14,22 +14,24 @@ public class LoggerFactory {
     private static final int FILE_COUNT = 3;
 
     static {
-        File logDir = new File(PathManager.LOG_DIR_PATH);
-        if (!logDir.exists()) {
-            logDir.mkdirs();
-        }
         try {
+            File logDir = new File(PathManager.LOG_DIR_PATH);
+            if (!logDir.exists()) {
+                logDir.mkdirs();
+            }
             fileHandler = new FileHandler(PathManager.LOG_FILE_PATH, FILE_LIMIT, FILE_COUNT, true);
+            fileHandler.setLevel(Level.INFO);
+            fileHandler.setFormatter(new SimpleFormatter());
         } catch (Exception e) {
-            e.printStackTrace();
+            // ignore
         }
-        fileHandler.setLevel(Level.INFO);
-        fileHandler.setFormatter(new SimpleFormatter());
     }
 
     public static Logger getLogger(Class<?> clazz) {
         Logger logger = Logger.getLogger(clazz.getName());
-        logger.addHandler(fileHandler);
+        if (fileHandler != null) {
+            logger.addHandler(fileHandler);
+        }
         logger.setUseParentHandlers(false);
         return logger;
     }

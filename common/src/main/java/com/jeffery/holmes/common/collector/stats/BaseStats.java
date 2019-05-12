@@ -24,10 +24,9 @@ public class BaseStats implements Stats {
 
     @Override
     public long onStart() {
-        long now = System.nanoTime();
-        int rc = runningCount.incrementAndGet();
-        ConcurrentUtils.setMaxConcurrently(concurrentMax, rc);
-        return now;
+        long startTime = System.nanoTime();
+        ConcurrentUtils.setMaxConcurrently(concurrentMax, runningCount.incrementAndGet());
+        return startTime;
     }
 
     @Override

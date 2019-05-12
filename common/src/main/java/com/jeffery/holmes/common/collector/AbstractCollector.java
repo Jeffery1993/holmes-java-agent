@@ -27,6 +27,11 @@ public abstract class AbstractCollector implements Collector<Aggregator> {
     }
 
     @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
     public Collector add(Aggregator aggregator) {
         aggregators.add(aggregator);
         return this;
@@ -36,7 +41,9 @@ public abstract class AbstractCollector implements Collector<Aggregator> {
     public Map<String, Object> collect() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         for (Aggregator aggregator : aggregators) {
-            map.put(aggregator.getName(), aggregator.harvest());
+            if (aggregator.isEnabled()) {
+                map.put(aggregator.getName(), aggregator.harvest());
+            }
         }
         return map;
     }

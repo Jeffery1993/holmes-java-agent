@@ -1,6 +1,6 @@
 package com.jeffery.holmes.common.plugin.jvm;
 
-import com.jeffery.holmes.common.collector.aggregator.NonePrimaryKeyAggregator;
+import com.jeffery.holmes.common.collector.aggregator.AbstractAggregator;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JVMMemoryAggregator extends NonePrimaryKeyAggregator {
+public class JVMMemoryAggregator extends AbstractAggregator {
 
     private MemoryMXBean memoryMXBean;
 

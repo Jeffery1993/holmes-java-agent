@@ -1,6 +1,6 @@
 package com.jeffery.holmes.core.base;
 
-import com.jeffery.holmes.core.util.LoggerFactory;
+import com.jeffery.holmes.common.util.LoggerFactory;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;

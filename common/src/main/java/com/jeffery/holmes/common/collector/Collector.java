@@ -8,6 +8,8 @@ public interface Collector<T> {
 
     boolean isEnabled();
 
+    void setEnabled(boolean enabled);
+
     Collector add(T item);
 
     Map<String, Object> collect();

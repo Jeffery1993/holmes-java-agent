@@ -1,6 +1,6 @@
 package com.jeffery.holmes.core.transformer;
 
-import com.jeffery.holmes.core.util.LoggerFactory;
+import com.jeffery.holmes.common.util.LoggerFactory;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -19,11 +19,12 @@ public class CompoundTransformer implements ClassFileTransformer {
             HolmesTransformer transformer = TransformerManager.getMatchedTransformer(className);
             if (transformer != null) {
                 try {
-                    return transformer.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
+                    LOGGER.info("Start to transform class: " + className);
+                    classfileBuffer = transformer.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
+                    LOGGER.info("Succeed to transform class: " + className);
                 } catch (Exception e) {
-                    LOGGER.severe("Failed to transform class: " + className);
+                    LOGGER.severe("Failed to transform class: " + className + " due to " + e);
                 }
-                LOGGER.info("Succeed to transform class: " + className);
             }
             return classfileBuffer;
         }

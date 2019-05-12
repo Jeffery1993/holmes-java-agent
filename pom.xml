@@ -41,6 +41,24 @@
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <env>pro</env>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -109,4 +127,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
