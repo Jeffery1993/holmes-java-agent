@@ -7,13 +7,16 @@ import com.jeffery.holmes.common.util.ConfigManager;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Implementation of {@link Message}.
+ */
 public class MessageImpl implements Message {
 
     private int type;
-    private Map<String, Object> header;
+    private Map<String, Object> headers;
     private Object body;
 
-    private static final Map<String, Object> DEFAULT_HEADER = new HashMap<String, Object>();
+    private static final HashMap<String, Object> DEFAULT_HEADER = new HashMap<String, Object>();
 
     static {
         DEFAULT_HEADER.put(ConfigConsts.CLUSTER_ID, ConfigManager.getClusterId());
@@ -21,12 +24,12 @@ public class MessageImpl implements Message {
     }
 
     public MessageImpl(int type, Object body) {
-        this(type, DEFAULT_HEADER, body);
+        this(type, (Map<String, Object>) DEFAULT_HEADER.clone(), body);
     }
 
-    public MessageImpl(int type, Map<String, Object> header, Object body) {
+    public MessageImpl(int type, Map<String, Object> headers, Object body) {
         this.type = type;
-        this.header = header;
+        this.headers = headers;
         this.body = body;
     }
 
@@ -40,12 +43,22 @@ public class MessageImpl implements Message {
     }
 
     @Override
-    public Map<String, Object> getHeader() {
-        return header;
+    public Map<String, Object> getHeaders() {
+        return headers;
     }
 
-    public void setHeader(Map<String, Object> header) {
-        this.header = header;
+    public void setHeaders(Map<String, Object> headers) {
+        this.headers = headers;
+    }
+
+    @Override
+    public Object getHeader(String key) {
+        return headers.get(key);
+    }
+
+    @Override
+    public void addHeader(String key, Object value) {
+        headers.put(key, value);
     }
 
     @Override
@@ -58,8 +71,8 @@ public class MessageImpl implements Message {
     }
 
     @Override
-    public byte[] getHeaderAsBytes() {
-        return JSON.toJSONBytes(header);
+    public byte[] getHeadersAsBytes() {
+        return JSON.toJSONBytes(headers);
     }
 
     @Override

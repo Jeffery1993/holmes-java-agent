@@ -5,11 +5,23 @@ import com.jeffery.holmes.common.collector.stats.Stats;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Default implementation of {@link AbstractKeyValueAggregator}
+ *
+ * @param <K> type of key, extends {@link PrimaryKey}
+ * @param <V> type of value, extends {@link Stats}
+ * @see com.jeffery.holmes.common.collector.aggregator.AbstractKeyValueAggregator
+ */
 public abstract class DefaultKeyValueAggregator<K extends PrimaryKey, V extends Stats> extends AbstractKeyValueAggregator<K, V> {
 
     private ThreadLocal<V> statsLocal = new ThreadLocal<V>();
     private ThreadLocal<Long> timeLocal = new ThreadLocal<Long>();
 
+    /**
+     * Invoke on start of method.
+     *
+     * @param key key of aggregator
+     */
     public void onStart(K key) {
         if (!enabled || key == null || key.size() == 0) {
             return;
@@ -22,6 +34,11 @@ public abstract class DefaultKeyValueAggregator<K extends PrimaryKey, V extends 
         }
     }
 
+    /**
+     * Invoke on throwable of method.
+     *
+     * @param throwable exception
+     */
     public void onThrowable(Throwable throwable) {
         if (!enabled) {
             return;
@@ -32,6 +49,9 @@ public abstract class DefaultKeyValueAggregator<K extends PrimaryKey, V extends 
         }
     }
 
+    /**
+     * Invoke on finally of method.
+     */
     public void onFinally() {
         if (!enabled) {
             return;

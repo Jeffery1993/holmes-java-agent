@@ -6,6 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * LoggerFactory for common module and core module.
+ */
 public class LoggerFactory {
 
     private static FileHandler fileHandler;
@@ -27,6 +30,12 @@ public class LoggerFactory {
         }
     }
 
+    /**
+     * Return a logger named corresponding to the class passed as parameter.
+     *
+     * @param clazz class provided
+     * @return logger associated with the class
+     */
     public static Logger getLogger(Class<?> clazz) {
         Logger logger = Logger.getLogger(clazz.getName());
         if (fileHandler != null) {

@@ -1,13 +1,13 @@
 package com.jeffery.holmes.core.collect;
 
 import com.jeffery.holmes.common.collector.Collector;
-import com.jeffery.holmes.core.base.ScheduledTask;
+import com.jeffery.holmes.core.base.AbstractScheduledTask;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class CollectTask extends ScheduledTask {
+public class CollectTask extends AbstractScheduledTask {
 
     private static final CollectTask COLLECT_TASK = new CollectTask();
 

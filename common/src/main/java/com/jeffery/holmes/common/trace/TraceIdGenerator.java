@@ -4,9 +4,12 @@ import com.jeffery.holmes.common.util.ConfigManager;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Generator of traceId.
+ */
 public class TraceIdGenerator {
 
-    private static final String TRACE_ID_PREFIX = ConfigManager.getClusterId() + " - " + ConfigManager.getAppId() + " - ";
+    private static final String TRACE_ID_PREFIX = ConfigManager.getClusterId() + "-" + ConfigManager.getAppId() + "-";
     private static final AtomicLong COUNT = new AtomicLong(0L);
 
     public static String generate() {

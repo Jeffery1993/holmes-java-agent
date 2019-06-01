@@ -8,6 +8,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ * Service to transfer data based on TCP protocol.
+ */
 public class TransferService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransferService.class);
@@ -44,11 +47,11 @@ public class TransferService {
         if (dataOutputStream != null) {
             dataOutputStream.writeInt(MAGIC_NUMBER);
             dataOutputStream.writeByte(message.getType());
-            byte[] header = message.getHeaderAsBytes();
+            byte[] headers = message.getHeadersAsBytes();
             byte[] body = message.getBodyAsBytes();
-            dataOutputStream.writeInt(header.length);
+            dataOutputStream.writeInt(headers.length);
             dataOutputStream.writeInt(body.length);
-            dataOutputStream.write(header);
+            dataOutputStream.write(headers);
             dataOutputStream.write(body);
             dataOutputStream.flush();
             return true;

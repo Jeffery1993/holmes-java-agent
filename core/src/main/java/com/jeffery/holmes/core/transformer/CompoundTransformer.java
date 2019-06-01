@@ -5,8 +5,14 @@ import com.jeffery.holmes.common.util.LoggerFactory;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Compound transformer which is added to {@link java.lang.instrument.Instrumentation}.
+ *
+ * @see java.lang.instrument.ClassFileTransformer
+ */
 public class CompoundTransformer implements ClassFileTransformer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CompoundTransformer.class);
@@ -23,7 +29,7 @@ public class CompoundTransformer implements ClassFileTransformer {
                     classfileBuffer = transformer.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
                     LOGGER.info("Succeed to transform class: " + className);
                 } catch (Exception e) {
-                    LOGGER.severe("Failed to transform class: " + className + " due to " + e);
+                    LOGGER.log(Level.SEVERE, "Failed to transform class: " + className, e);
                 }
             }
             return classfileBuffer;

@@ -41,8 +41,8 @@
                             </descriptorRefs>
                             <archive>
                                 <manifestEntries>
-                                    <Premain-Class>com.jeffery.holmes.premain.AgentBootstrap</Premain-Class>
-                                    <Agent-Class>com.jeffery.holmes.premain.AgentBootstrap</Agent-Class>
+                                    <Premain-Class>com.jeffery.holmes.agent.AgentBootstrap</Premain-Class>
+                                    <Agent-Class>com.jeffery.holmes.agent.AgentBootstrap</Agent-Class>
                                     <Can-Redefine-Classes>true</Can-Redefine-Classes>
                                     <Can-Retransform-Classes>true</Can-Retransform-Classes>
                                 </manifestEntries>

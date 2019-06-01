@@ -1,27 +1,31 @@
-package com.jeffery.holmes.premain;
+package com.jeffery.holmes.agent;
 
-import com.jeffery.holmes.premain.bootstrap.BootstrapInvoker;
-import com.jeffery.holmes.premain.classloader.AgentClassLoader;
-import com.jeffery.holmes.premain.util.AgentLogFactory;
-import com.jeffery.holmes.premain.util.JarFileManager;
+import com.jeffery.holmes.agent.bootstrap.BootstrapInvoker;
+import com.jeffery.holmes.agent.classloader.AgentClassLoader;
+import com.jeffery.holmes.agent.util.AgentLoggerFactory;
+import com.jeffery.holmes.agent.util.JarFileManager;
 
 import java.lang.instrument.Instrumentation;
 import java.util.jar.JarFile;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The entrance class for java agent.
+ */
 public class AgentBootstrap {
 
-    private static final Logger LOGGER = AgentLogFactory.getLogger(AgentBootstrap.class);
+    private static final Logger LOGGER = AgentLoggerFactory.getLogger(AgentBootstrap.class);
 
     public static void premain(String args, Instrumentation inst) {
-        LOGGER.info("Start to execute premain");
+        LOGGER.info("Start to execute agent");
         try {
             main(args, inst);
         } catch (Exception e) {
-            LOGGER.severe("Failed to execute premain: " + e);
+            LOGGER.log(Level.SEVERE, "Failed to execute agent", e);
             return;
         }
-        LOGGER.info("Succeed to execute premain");
+        LOGGER.info("Succeed to execute agent");
     }
 
     public static void agentmain(String args, Instrumentation inst) {
@@ -29,7 +33,7 @@ public class AgentBootstrap {
         try {
             main(args, inst);
         } catch (Exception e) {
-            LOGGER.severe("Failed to execute agentmain: " + e);
+            LOGGER.log(Level.SEVERE, "Failed to execute agentmain", e);
             return;
         }
         LOGGER.info("Succeed to execute agentmain");

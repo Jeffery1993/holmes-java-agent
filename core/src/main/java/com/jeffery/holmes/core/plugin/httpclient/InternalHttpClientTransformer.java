@@ -11,6 +11,9 @@ import javassist.CtMethod;
 
 import java.security.ProtectionDomain;
 
+/**
+ * Transformer for org/apache/http/impl/client/InternalHttpClient.
+ */
 public class InternalHttpClientTransformer extends AccurateMatchedTransformer {
 
     private static final String HTTP_CLIENT_COLLECTOR_CLASS_NAME = HttpClientCollector.class.getName();
@@ -44,7 +47,7 @@ public class InternalHttpClientTransformer extends AccurateMatchedTransformer {
         beforeCode.append("{");
         beforeCode.append("    String url = $2.getRequestLine().getUri();");
         beforeCode.append("    String method = $2.getRequestLine().getMethod();");
-        beforeCode.append("    " + SPAN_EVENT_CLASS_NAME + " spanEvent = " + String.format("%s.start(%s, %s, %s, url);", TRACE_COLLECTOR_CLASS_NAME, className, ctMethod.getName(), EventTypeEnum.HttpClient));
+        beforeCode.append("    " + SPAN_EVENT_CLASS_NAME + " spanEvent = " + String.format("%s.start(\"%s\", \"%s\", \"%s\", url);", TRACE_COLLECTOR_CLASS_NAME, className, ctMethod.getName(), EventTypeEnum.HttpClient));
         beforeCode.append("    if (spanEvent != null) {");
         beforeCode.append("        spanEvent.addParameter(\"method\", method);");
         beforeCode.append("        $2.addHeader(\"" + ConfigConsts.TRACE_ID + "\", spanEvent.getTraceId());");

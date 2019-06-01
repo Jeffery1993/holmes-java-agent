@@ -1,6 +1,7 @@
 package com.jeffery.holmes.core.collect;
 
 import com.jeffery.holmes.common.trace.Span;
+import com.jeffery.holmes.common.trace.SpanEvent;
 import com.jeffery.holmes.common.trace.TraceCollector;
 import com.jeffery.holmes.core.base.AbstractQueueService;
 import com.jeffery.holmes.core.consts.DataCategoryEnum;
@@ -9,6 +10,9 @@ import com.jeffery.holmes.core.message.MessageImpl;
 
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Queue service for trace data.
+ */
 public class TraceQueueService extends AbstractQueueService<Object> {
 
     private static final TraceQueueService TRACE_QUEUE_SERVICE = new TraceQueueService();
@@ -45,9 +49,11 @@ public class TraceQueueService extends AbstractQueueService<Object> {
                         Object item = queue.take();
                         if (item instanceof Span) {
                             Message message = new MessageImpl(DataCategoryEnum.SPAN.getCode(), item);
+                            message.addHeader("traceId", ((Span) item).getTraceId());
                             TransferService.transfer(message);
-                        } else {
+                        } else if (item instanceof SpanEvent) {
                             Message message = new MessageImpl(DataCategoryEnum.SPAN_EVENT.getCode(), item);
+                            message.addHeader("traceId", ((SpanEvent) item).getTraceId());
                             TransferService.transfer(message);
                         }
                     } catch (InterruptedException e) {

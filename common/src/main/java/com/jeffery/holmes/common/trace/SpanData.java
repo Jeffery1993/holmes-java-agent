@@ -3,13 +3,15 @@ package com.jeffery.holmes.common.trace;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Data of {@link Span}
+ *
+ * @see com.jeffery.holmes.common.trace.Span
+ */
 public class SpanData {
 
     private String traceId;
     private String spanId;
-
-    private String clusterId;
-    private String appId;
 
     private long startTime;
     private long usedTime;
@@ -38,22 +40,6 @@ public class SpanData {
 
     public void setSpanId(String spanId) {
         this.spanId = spanId;
-    }
-
-    public String getClusterId() {
-        return clusterId;
-    }
-
-    public void setClusterId(String clusterId) {
-        this.clusterId = clusterId;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
     }
 
     public long getStartTime() {

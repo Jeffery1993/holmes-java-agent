@@ -9,12 +9,28 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Logger;
 
+/**
+ * Abstract class for key-value stored aggregator.
+ *
+ * @param <K> type of key
+ * @param <V> type of value
+ * @see com.jeffery.holmes.common.collector.aggregator.AbstractAggregator
+ */
 public abstract class AbstractKeyValueAggregator<K, V> extends AbstractAggregator {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected final ConcurrentMap<K, V> keyValue = new ConcurrentHashMap<K, V>();
 
+    /**
+     * Get value by key.
+     *
+     * <p>If the value associated with the key does not exist, a new value will be created.
+     * If the size is greater than limit, the aggregator will be disabled and null will be returned.</p>
+     *
+     * @param key the key provided
+     * @return value corresponding to the key
+     */
     protected V getValue(K key) {
         V value = keyValue.get(key);
         if (value != null) {
@@ -44,10 +60,18 @@ public abstract class AbstractKeyValueAggregator<K, V> extends AbstractAggregato
         }
     }
 
+    /**
+     * Get size of the aggregator.
+     *
+     * @return size
+     */
     public int size() {
         return keyValue.size();
     }
 
+    /**
+     * Clear data of the aggregator.
+     */
     public void clear() {
         keyValue.clear();
     }
@@ -61,14 +85,36 @@ public abstract class AbstractKeyValueAggregator<K, V> extends AbstractAggregato
         return list;
     }
 
+    /**
+     * Limit of keys in the aggregator. Can be overrided.
+     *
+     * @return limit of key number
+     */
     protected int getLimit() {
         return 500;
     }
 
+    /**
+     * Make one row with key and value.
+     *
+     * @param key   key provided
+     * @param value value
+     * @return one row data
+     */
     protected abstract Map<String, Object> getRow(K key, V value);
 
+    /**
+     * Get names of key.
+     *
+     * @return names of key
+     */
     protected abstract String[] getKeyNames();
 
+    /**
+     * Get type of value.
+     *
+     * @return type of value
+     */
     protected abstract Class<V> getValueType();
 
 }

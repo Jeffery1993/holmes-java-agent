@@ -1,7 +1,6 @@
 package com.jeffery.holmes.common.plugin.mysql;
 
 import com.jeffery.holmes.common.collector.AbstractCollector;
-import com.jeffery.holmes.common.collector.Collector;
 import com.jeffery.holmes.common.collector.aggregator.PrimaryKey;
 
 public class MysqlCollector extends AbstractCollector {
@@ -12,8 +11,10 @@ public class MysqlCollector extends AbstractCollector {
         this.add(mysqlAggregator);
     }
 
-    public static Collector getInstance() {
-        return new MysqlCollector();
+    private static final MysqlCollector INSTANCE = new MysqlCollector();
+
+    public static MysqlCollector getInstance() {
+        return INSTANCE;
     }
 
     public void onStart(String sql) {

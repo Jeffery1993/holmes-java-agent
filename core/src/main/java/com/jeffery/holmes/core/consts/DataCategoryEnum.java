@@ -1,5 +1,8 @@
 package com.jeffery.holmes.core.consts;
 
+/**
+ * Enum for data categories.
+ */
 public enum DataCategoryEnum {
 
     MONITOR(0), SPAN(1), SPAN_EVENT(2);

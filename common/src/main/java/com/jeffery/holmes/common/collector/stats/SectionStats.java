@@ -3,6 +3,9 @@ package com.jeffery.holmes.common.collector.stats;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Stats with the ability to stat performance in a sectioned time.
+ */
 public class SectionStats extends BaseStats {
 
     private AtomicInteger ms0_1 = new AtomicInteger(0);

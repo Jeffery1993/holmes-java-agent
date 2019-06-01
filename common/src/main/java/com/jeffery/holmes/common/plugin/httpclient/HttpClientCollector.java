@@ -1,7 +1,6 @@
 package com.jeffery.holmes.common.plugin.httpclient;
 
 import com.jeffery.holmes.common.collector.AbstractCollector;
-import com.jeffery.holmes.common.collector.Collector;
 import com.jeffery.holmes.common.collector.aggregator.PrimaryKey;
 
 public class HttpClientCollector extends AbstractCollector {
@@ -12,8 +11,10 @@ public class HttpClientCollector extends AbstractCollector {
         this.add(httpClientAggregator);
     }
 
-    public static Collector getInstance() {
-        return new HttpClientCollector();
+    private static final HttpClientCollector INSTANCE = new HttpClientCollector();
+
+    public static HttpClientCollector getInstance() {
+        return INSTANCE;
     }
 
     public void onStart(String url, String method) {

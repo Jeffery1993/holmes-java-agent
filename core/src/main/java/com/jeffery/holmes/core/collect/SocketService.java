@@ -9,6 +9,9 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+/**
+ * Service to get socket entity.
+ */
 public class SocketService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketService.class);
@@ -29,7 +32,7 @@ public class SocketService {
                     socketEntity = new SocketEntity(socket);
                 } catch (IOException e) {
                     connectStatus = ConnectStatus.INCONNECTABLE;
-                    LOGGER.severe("Failed to connect to ips " + Arrays.toString(serverIps) + " port " + serverPort + " with error " + e);
+                    LOGGER.severe("Failed to connect to ips " + Arrays.toString(serverIps) + " port " + serverPort + " due to " + e);
                 }
                 connectStatus = ConnectStatus.CONNECTED;
             }
@@ -46,7 +49,7 @@ public class SocketService {
                 // ignore
             }
             if (socket != null) {
-                LOGGER.severe("Connected to ip " + ip + " port " + serverPort);
+                LOGGER.info("Connected to ip " + ip + " port " + serverPort);
                 break;
             }
         }

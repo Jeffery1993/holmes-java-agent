@@ -2,6 +2,9 @@ package com.jeffery.holmes.common.collector.aggregator;
 
 import java.util.Arrays;
 
+/**
+ * Primary key used for {@link AbstractKeyValueAggregator}.
+ */
 public class PrimaryKey {
 
     private String[] keys;

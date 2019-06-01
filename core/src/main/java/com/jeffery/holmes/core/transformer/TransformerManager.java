@@ -5,12 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manager for transformers.
+ */
 public class TransformerManager {
 
     private static final Map<String, HolmesTransformer> ACCURATE_MATCHED_TRANSFORMER_MAP = new HashMap<String, HolmesTransformer>();
     private static final List<PrefixMatchedTransformer> PREFIX_MATCHED_TRANSFORMER_LIST = new ArrayList<PrefixMatchedTransformer>();
     private static final List<RegexMatchedTransformer> REGEX_MATCHED_TRANSFORMER_LIST = new ArrayList<RegexMatchedTransformer>();
 
+    /**
+     * Register the holmes transformer.
+     *
+     * @param transformer the holmes transformer to be registered
+     */
     public static void register(HolmesTransformer transformer) {
         if (transformer instanceof AccurateMatchedTransformer) {
             AccurateMatchedTransformer accurateMatchedTransformer = (AccurateMatchedTransformer) transformer;
@@ -29,6 +37,12 @@ public class TransformerManager {
         }
     }
 
+    /**
+     * Get the matched holmes transformer according to the {@code className} provided.
+     *
+     * @param className class name provided
+     * @return the matched holmes transformer or null if no transformer found
+     */
     public static HolmesTransformer getMatchedTransformer(String className) {
         HolmesTransformer transformer = null;
         if ((transformer = ACCURATE_MATCHED_TRANSFORMER_MAP.get(className)) != null) {

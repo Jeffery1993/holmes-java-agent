@@ -27,6 +27,14 @@
             <source>../core/target/holmes-core-jar-with-dependencies.jar</source>
             <destName>holmes-core.jar</destName>
         </file>
+        <file>
+            <source>../demo/target/holmes-demo.jar</source>
+            <destName>holmes-demo.jar</destName>
+        </file>
+        <file>
+            <source>../server/target/holmes-server.jar</source>
+            <destName>holmes-server.jar</destName>
+        </file>
     </files>
 
     <fileSets>

@@ -6,6 +6,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+/**
+ * Abstract class for queue service.
+ *
+ * @param <T> type of entity stored in the queue
+ */
 public abstract class AbstractQueueService<T> implements Service {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -57,12 +62,32 @@ public abstract class AbstractQueueService<T> implements Service {
         return queue.take();
     }
 
+    /**
+     * Get the blocking queue.
+     *
+     * @return the blocking queue used
+     */
     protected abstract BlockingQueue<T> getBlockingQueue();
 
+    /**
+     * Get the number of consumers.
+     *
+     * @return the number of consumers
+     */
     protected abstract int getNumberOfConsumers();
 
+    /**
+     * Get the consumer name, which is used in thread name.
+     *
+     * @return the consumer name
+     */
     protected abstract String getConsumerName();
 
+    /**
+     * Get the task to be executed by consumers.
+     *
+     * @return the task to be executed by consumers
+     */
     protected abstract Runnable getConsumeTask();
 
 }

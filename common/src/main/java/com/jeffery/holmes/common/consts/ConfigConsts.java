@@ -1,5 +1,8 @@
 package com.jeffery.holmes.common.consts;
 
+/**
+ * Constant class for configurations.
+ */
 public interface ConfigConsts {
 
     String TRACE_ID = "holmes-trace-id";

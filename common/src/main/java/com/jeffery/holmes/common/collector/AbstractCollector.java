@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Abstract class for {@link Collector}. A collector consists of one or more {@link Aggregator}(s).
+ */
 public abstract class AbstractCollector implements Collector<Aggregator> {
 
     protected String name;
@@ -40,6 +43,10 @@ public abstract class AbstractCollector implements Collector<Aggregator> {
     @Override
     public Map<String, Object> collect() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
+        // add timestamp to the collected data
+        map.put("name", getName());
+        map.put("timestamp", System.currentTimeMillis());
+        // collect data from aggregators
         for (Aggregator aggregator : aggregators) {
             if (aggregator.isEnabled()) {
                 map.put(aggregator.getName(), aggregator.harvest());

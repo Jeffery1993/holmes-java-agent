@@ -10,6 +10,9 @@ import javassist.CtMethod;
 
 import java.security.ProtectionDomain;
 
+/**
+ * Transformer for com/mysql/jdbc/PreparedStatement.
+ */
 public class PreparedStatementTransformer extends AccurateMatchedTransformer {
 
     private static final String MYSQL_COLLECTOR_CLASS_NAME = MysqlCollector.class.getName();
@@ -44,7 +47,7 @@ public class PreparedStatementTransformer extends AccurateMatchedTransformer {
         StringBuilder beforeCode = new StringBuilder();
         beforeCode.append("{");
         beforeCode.append("    String sql = $0.originalSql;");
-        beforeCode.append("    " + String.format("%s.start(%s, %s, %s, sql);", TRACE_COLLECTOR_CLASS_NAME, className, ctMethod.getName(), EventTypeEnum.Mysql));
+        beforeCode.append("    " + String.format("%s.start(\"%s\", \"%s\", \"%s\", sql);", TRACE_COLLECTOR_CLASS_NAME, className, ctMethod.getName(), EventTypeEnum.Mysql));
         beforeCode.append("    " + MYSQL_COLLECTOR_NAME + ".onStart(sql);");
         beforeCode.append("}");
         ctMethod.insertBefore(beforeCode.toString());

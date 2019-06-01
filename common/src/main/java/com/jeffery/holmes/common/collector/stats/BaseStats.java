@@ -7,19 +7,22 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Base class for stats.
+ */
 public class BaseStats implements Stats {
 
-    // 调用次数
+    // count of invocations
     private AtomicInteger invokeCount = new AtomicInteger(0);
-    // 错误次数
+    // count of errors
     private AtomicInteger errorCount = new AtomicInteger(0);
-    // 总共耗时
+    // total time
     private AtomicLong totalTime = new AtomicLong(0L);
-    // 最大耗时
+    // maximum time
     private AtomicLong maxTime = new AtomicLong(0L);
-    // 当前并发
+    // count of running tasks
     private AtomicInteger runningCount = new AtomicInteger(0);
-    // 最大并发
+    // maximum of concurrent tasks
     private AtomicInteger concurrentMax = new AtomicInteger(0);
 
     @Override

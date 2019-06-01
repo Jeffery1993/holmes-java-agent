@@ -11,6 +11,9 @@ import javassist.CtMethod;
 
 import java.security.ProtectionDomain;
 
+/**
+ * Transformer for org/apache/catalina/core/StandardHostValve.
+ */
 public class StandardHostValveTransformer extends AccurateMatchedTransformer {
 
     private static final String URL_COLLECTOR_CLASS_NAME = UrlCollector.class.getName();
@@ -25,6 +28,7 @@ public class StandardHostValveTransformer extends AccurateMatchedTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws Exception {
         CtClass ctClass = JavassistUtils.makeCtClass(classfileBuffer);
         CollectorManager.register(UrlCollector.getInstance());
+
         try {
             CtClass[] params = JavassistUtils.buildParams("org.apache.catalina.connector.Request", "org.apache.catalina.connector.Response");
             CtMethod ctMethod = ctClass.getDeclaredMethod("invoke", params);
@@ -44,12 +48,14 @@ public class StandardHostValveTransformer extends AccurateMatchedTransformer {
         beforeCode.append("    String traceId = $1.getHeader(\"" + ConfigConsts.TRACE_ID + "\");");
         beforeCode.append("    String spanId = $1.getHeader(\"" + ConfigConsts.SPAN_ID + "\");");
         beforeCode.append("    String url = $1.getRequestURI();");
-        beforeCode.append("    String method = $1.getMethod();");
-        beforeCode.append("    " + SPAN_EVENT_CLASS_NAME + " spanEvent = " + String.format("%s.start(%s, %s, %s, url, traceId, spanId, url, method);", TRACE_COLLECTOR_CLASS_NAME, className, ctMethod.getName(), EventTypeEnum.Tomcat));
-        beforeCode.append("    if (spanEvent != null) {");
-        beforeCode.append("        spanEvent.addParameter(\"method\", method);");
+        beforeCode.append("    if (!" + URL_COLLECTOR_NAME + ".onFilter(url)) {");
+        beforeCode.append("        String method = $1.getMethod();");
+        beforeCode.append("        " + SPAN_EVENT_CLASS_NAME + " spanEvent = " + String.format("%s.start(\"%s\", \"%s\", \"%s\", url, traceId, spanId, url, method);", TRACE_COLLECTOR_CLASS_NAME, className, ctMethod.getName(), EventTypeEnum.Tomcat));
+        beforeCode.append("        if (spanEvent != null) {");
+        beforeCode.append("            spanEvent.addParameter(\"method\", method);");
+        beforeCode.append("        }");
+        beforeCode.append("        " + URL_COLLECTOR_NAME + ".onStart(url, method);");
         beforeCode.append("    }");
-        beforeCode.append("    " + URL_COLLECTOR_NAME + ".onStart(url, method);");
         beforeCode.append("}");
         ctMethod.insertBefore(beforeCode.toString());
 
@@ -63,7 +69,7 @@ public class StandardHostValveTransformer extends AccurateMatchedTransformer {
 
         StringBuilder afterCode = new StringBuilder();
         afterCode.append("{");
-        afterCode.append("    " + TRACE_COLLECTOR_CLASS_NAME + ".end($_.getStatus());");
+        afterCode.append("    " + TRACE_COLLECTOR_CLASS_NAME + ".end($2.getStatus());");
         afterCode.append("    " + URL_COLLECTOR_NAME + ".onFinally();");
         afterCode.append("}");
         ctMethod.insertAfter(afterCode.toString(), true);

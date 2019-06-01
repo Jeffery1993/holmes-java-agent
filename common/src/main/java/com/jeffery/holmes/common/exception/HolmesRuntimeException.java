@@ -1,5 +1,8 @@
 package com.jeffery.holmes.common.exception;
 
+/**
+ * Runtime exception for holmes.
+ */
 public class HolmesRuntimeException extends RuntimeException {
 
     public HolmesRuntimeException() {

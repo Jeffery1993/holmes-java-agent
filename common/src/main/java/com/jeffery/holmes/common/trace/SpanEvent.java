@@ -1,9 +1,13 @@
 package com.jeffery.holmes.common.trace;
 
-import com.jeffery.holmes.common.util.ConfigManager;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * A span event represents a event in the {@link Span}.
+ *
+ * @see com.jeffery.holmes.common.trace.Span
+ * @see com.jeffery.holmes.common.trace.SpanEventData
+ */
 public class SpanEvent extends SpanEventData {
 
     private Span span;
@@ -16,8 +20,6 @@ public class SpanEvent extends SpanEventData {
         this.setSpanId(span.getSpanId());
         this.setSpanEventId("1");
         this.setSpan(span);
-        this.setClusterId(ConfigManager.getClusterId());
-        this.setAppId(ConfigManager.getAppId());
         this.setClassName(className);
         this.setMethodName(methodName);
         this.setEventType(eventType);

@@ -1,8 +1,11 @@
-package com.jeffery.holmes.premain.classloader;
+package com.jeffery.holmes.agent.classloader;
 
 import java.net.URL;
 import java.net.URLClassLoader;
 
+/**
+ * Classloader used for agent exclusively.
+ */
 public class AgentClassLoader extends URLClassLoader {
 
     public AgentClassLoader(URL[] urls) {
@@ -15,8 +18,7 @@ public class AgentClassLoader extends URLClassLoader {
         if (loadedClass != null) {
             return loadedClass;
         }
-
-        // 优先从parent里加载系统类，避免抛出ClassNotFoundException
+        // load from parent first
         if (name != null && (name.startsWith("sun.") || name.startsWith("java."))) {
             return super.loadClass(name, resolve);
         }

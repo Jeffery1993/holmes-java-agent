@@ -2,6 +2,11 @@ package com.jeffery.holmes.core.transformer;
 
 import java.util.regex.Pattern;
 
+/**
+ * An implementation of {@link HolmesTransformer}.
+ *
+ * <p>Matching when the {@code className} matches the regex pattern, which is provided by subclass.</p>
+ */
 public abstract class RegexMatchedTransformer implements HolmesTransformer {
 
     private Pattern pattern;
@@ -24,6 +29,11 @@ public abstract class RegexMatchedTransformer implements HolmesTransformer {
         return pattern.matcher(className).matches();
     }
 
+    /**
+     * Get the regex name to match.
+     *
+     * @return the regex name to match
+     */
     public abstract String getRegexName();
 
 }

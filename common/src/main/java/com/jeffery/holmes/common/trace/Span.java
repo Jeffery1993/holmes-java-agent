@@ -1,16 +1,17 @@
 package com.jeffery.holmes.common.trace;
 
-import com.jeffery.holmes.common.util.ConfigManager;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * A span represents an invocation from user or last node, may be HTTP or RPC.
+ *
+ * @see com.jeffery.holmes.common.trace.SpanData
+ */
 public class Span extends SpanData {
 
     private AtomicInteger count = new AtomicInteger(0);
 
     public Span(String traceId, String spanId, String url, String method) {
-        this.setClusterId(ConfigManager.getClusterId());
-        this.setAppId(ConfigManager.getAppId());
         this.setTraceId(traceId == null ? TraceIdGenerator.generate() : traceId);
         this.setSpanId(spanId == null ? "1" : spanId);
         this.setUrl(url);

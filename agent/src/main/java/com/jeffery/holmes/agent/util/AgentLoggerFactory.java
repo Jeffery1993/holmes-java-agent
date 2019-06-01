@@ -1,4 +1,4 @@
-package com.jeffery.holmes.premain.util;
+package com.jeffery.holmes.agent.util;
 
 import java.io.File;
 import java.lang.management.ManagementFactory;
@@ -7,7 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class AgentLogFactory {
+/**
+ * LoggerFactory for agent module.
+ */
+public class AgentLoggerFactory {
 
     private static FileHandler fileHandler;
 
@@ -15,7 +18,7 @@ public class AgentLogFactory {
     private static final int FILE_COUNT = 3;
 
     static {
-        String codeSourceLocation = AgentLogFactory.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String codeSourceLocation = AgentLoggerFactory.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         if (codeSourceLocation != null && codeSourceLocation.endsWith(".jar")) {
             if (codeSourceLocation.startsWith("/")) {
                 codeSourceLocation = codeSourceLocation.substring(1);
@@ -34,7 +37,8 @@ public class AgentLogFactory {
     }
 
     private static final String LOG_FILE_NAME = "holmes-agent.log";
-    private static final String LOG_DIR_PATH = System.getProperty("basePath") + File.separator + "logs" + File.separator + System.getProperty("clusterId") + " - " + System.getProperty("appId");
+    private static final String LOG_BASE_PATH = System.getProperty("user.home") + File.separator + "holmes" + File.separator + "logs";
+    private static final String LOG_DIR_PATH = LOG_BASE_PATH + File.separator + System.getProperty("clusterId") + " - " + System.getProperty("appId");
     private static final String LOG_FILE_PATH = LOG_DIR_PATH + File.separator + LOG_FILE_NAME;
 
     static {
@@ -51,6 +55,12 @@ public class AgentLogFactory {
         }
     }
 
+    /**
+     * Return a logger named corresponding to the class passed as parameter.
+     *
+     * @param clazz class provided
+     * @return logger associated with the class
+     */
     public static Logger getLogger(Class<?> clazz) {
         Logger logger = Logger.getLogger(clazz.getName());
         if (fileHandler != null) {

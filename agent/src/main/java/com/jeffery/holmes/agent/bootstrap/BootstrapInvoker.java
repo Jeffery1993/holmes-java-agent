@@ -1,12 +1,18 @@
-package com.jeffery.holmes.premain.bootstrap;
+package com.jeffery.holmes.agent.bootstrap;
 
-import com.jeffery.holmes.premain.classloader.ContextClassloaderExecutor;
+import com.jeffery.holmes.agent.classloader.ContextClassLoaderExecutor;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Method;
 
+/**
+ * Proxy class for agent boot class.
+ */
 public class BootstrapInvoker implements Bootstrap {
 
+    /**
+     * The actual class name for boot class.
+     */
     private static final String BOOTSTRAP_IMPL_CLASS = "com.jeffery.holmes.core.BootstrapImpl";
 
     private ClassLoader classLoader;
@@ -20,7 +26,7 @@ public class BootstrapInvoker implements Bootstrap {
         final Class<?> bootstrapClazz;
         final Object bootstrapInstance;
         final Method bootMethod;
-        ContextClassloaderExecutor contextClassloaderExecutor = new ContextClassloaderExecutor(classLoader);
+        ContextClassLoaderExecutor contextClassloaderExecutor = new ContextClassLoaderExecutor(classLoader);
         try {
             bootstrapClazz = classLoader.loadClass(BOOTSTRAP_IMPL_CLASS);
             bootstrapInstance = bootstrapClazz.newInstance();

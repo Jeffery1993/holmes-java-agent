@@ -4,16 +4,29 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+/**
+ * Utility for network.
+ */
 public class NetworkUtils {
 
     private static final String WINDOWS = "windows";
     private static final String OS_NAME = "os.name";
 
+    /**
+     * Judge whether the operating system is windows or not.
+     *
+     * @return true if yes
+     */
     public static boolean isWindowsOS() {
         String osName = System.getProperty(OS_NAME);
         return osName.toLowerCase().contains(WINDOWS);
     }
 
+    /**
+     * Get the ip address.
+     *
+     * @return ip address
+     */
     public static String getIpAddress() {
         InetAddress ip = null;
         try {
@@ -43,8 +56,8 @@ public class NetworkUtils {
                 }
             }
         } catch (Exception e) {
+            // ignore
         }
-
         return ip == null ? null : ip.getHostAddress();
     }
 
