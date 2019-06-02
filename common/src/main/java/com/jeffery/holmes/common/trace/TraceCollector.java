@@ -67,7 +67,7 @@ public class TraceCollector {
             spanEvent.setError(true);
             spanEvent.setErrorType(throwable.getClass().getName());
             spanEvent.setErrorMessage(throwable.getMessage());
-            Span span = spanEvent.getSpan();
+            Span span = spanEvent.takeSpan();
             span.setError(true);
             span.setErrorType(throwable.getClass().getName());
             span.setErrorMessage(throwable.getMessage());
@@ -82,16 +82,16 @@ public class TraceCollector {
     public static void end(int code) {
         SpanEvent spanEvent = SPAN_EVENT_THREAD_LOCAL.get();
         if (spanEvent != null) {
-            Span span = spanEvent.getSpan();
+            Span span = spanEvent.takeSpan();
             long usedTime = System.currentTimeMillis() - spanEvent.getStartTime();
             spanEvent.setUsedTime(usedTime);
-            if (spanEvent.getParent() == null) {
+            if (spanEvent.takeParent() == null) {
                 span.setUsedTime(usedTime);
                 span.setCode(code);
                 SPAN_EVENT_THREAD_LOCAL.set(null);
                 TRACE_BLOCKING_QUEUE.offer(span);
             } else {
-                SPAN_EVENT_THREAD_LOCAL.set(spanEvent.getParent());
+                SPAN_EVENT_THREAD_LOCAL.set(spanEvent.takeParent());
             }
             TRACE_BLOCKING_QUEUE.offer(spanEvent);
         }

@@ -48,12 +48,14 @@ public class TraceQueueService extends AbstractQueueService<Object> {
                     try {
                         Object item = queue.take();
                         if (item instanceof Span) {
-                            Message message = new MessageImpl(DataCategoryEnum.SPAN.getCode(), item);
-                            message.addHeader("traceId", ((Span) item).getTraceId());
+                            Span span = (Span) item;
+                            Message message = new MessageImpl(DataCategoryEnum.SPAN.getCode(), span);
+                            message.addHeader("traceId", span.getTraceId());
                             TransferService.transfer(message);
                         } else if (item instanceof SpanEvent) {
-                            Message message = new MessageImpl(DataCategoryEnum.SPAN_EVENT.getCode(), item);
-                            message.addHeader("traceId", ((SpanEvent) item).getTraceId());
+                            SpanEvent spanEvent = (SpanEvent) item;
+                            Message message = new MessageImpl(DataCategoryEnum.SPAN_EVENT.getCode(), spanEvent);
+                            message.addHeader("traceId", spanEvent.getTraceId());
                             TransferService.transfer(message);
                         }
                     } catch (InterruptedException e) {

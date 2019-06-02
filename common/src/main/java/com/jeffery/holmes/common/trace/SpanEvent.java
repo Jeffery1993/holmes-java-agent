@@ -27,12 +27,17 @@ public class SpanEvent extends SpanEventData {
     }
 
     public SpanEvent(SpanEvent spanEvent, String className, String methodName, String eventType, String argument) {
-        this(spanEvent.getSpan(), className, methodName, eventType, argument);
+        this(spanEvent.takeSpan(), className, methodName, eventType, argument);
         this.setParent(spanEvent);
         this.setSpanEventId(spanEvent.generateNextSpanEventId());
     }
 
-    public Span getSpan() {
+    /**
+     * Equivalent to get span. Rename to avoid serialization.
+     *
+     * @return span
+     */
+    public Span takeSpan() {
         return span;
     }
 
@@ -40,7 +45,12 @@ public class SpanEvent extends SpanEventData {
         this.span = span;
     }
 
-    public SpanEvent getParent() {
+    /**
+     * Equivalent to get parent. Rename to avoid serialization.
+     *
+     * @return parent span event
+     */
+    public SpanEvent takeParent() {
         return parent;
     }
 
@@ -49,7 +59,7 @@ public class SpanEvent extends SpanEventData {
     }
 
     public String attachNextSpanId() {
-        String nextSpanId = this.getSpan().generateNextSpanId();
+        String nextSpanId = this.takeSpan().generateNextSpanId();
         this.setNextSpanId(nextSpanId);
         return nextSpanId;
     }
