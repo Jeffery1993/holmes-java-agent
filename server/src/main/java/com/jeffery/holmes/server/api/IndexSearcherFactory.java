@@ -17,29 +17,6 @@ import java.nio.file.Paths;
 public class IndexSearcherFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexSearcherFactory.class);
-    private static IndexReader indexReader;
-    private static IndexSearcher indexSearcher;
-
-    static {
-        try {
-            indexReader = DirectoryReader.open(FSDirectory.open(Paths.get(PathConsts.DATA_DIR)));
-            indexSearcher = new IndexSearcher(indexReader);
-        } catch (IOException e) {
-            LOGGER.error("Failed to init IndexReader due to " + e.getMessage());
-        }
-    }
-
-    /**
-     * Get the {@link IndexReader}.
-     *
-     * @return index reader
-     */
-    public static IndexReader getIndexReader() {
-        if (indexReader == null) {
-            throw new RuntimeException("IndexReader is null!");
-        }
-        return indexReader;
-    }
 
     /**
      * Get the {@link IndexSearcher}.
@@ -47,20 +24,14 @@ public class IndexSearcherFactory {
      * @return index searcher
      */
     public static IndexSearcher getIndexSearcher() {
-        if (indexSearcher == null) {
-            throw new RuntimeException("IndexSearcher is null!");
+        IndexSearcher indexSearcher;
+        try {
+            IndexReader indexReader = DirectoryReader.open(FSDirectory.open(Paths.get(PathConsts.DATA_DIR)));
+            indexSearcher = new IndexSearcher(indexReader);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to init IndexReader", e);
         }
         return indexSearcher;
-    }
-
-    public static void close() {
-        if (indexReader != null) {
-            try {
-                indexReader.close();
-            } catch (IOException e) {
-                LOGGER.error("Failed to close IndexReader due to " + e.getMessage());
-            }
-        }
     }
 
 }

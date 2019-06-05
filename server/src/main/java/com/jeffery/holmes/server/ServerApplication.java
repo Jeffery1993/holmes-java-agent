@@ -1,6 +1,5 @@
 package com.jeffery.holmes.server;
 
-import com.jeffery.holmes.server.api.IndexSearcherFactory;
 import com.jeffery.holmes.server.index.IndexWriterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,6 @@ public class ServerApplication {
 
     private static void stopServer() {
         IndexWriterFactory.close();
-        IndexSearcherFactory.close();
     }
 
 }

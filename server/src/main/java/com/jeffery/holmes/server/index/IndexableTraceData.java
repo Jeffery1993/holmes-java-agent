@@ -20,7 +20,7 @@ public class IndexableTraceData implements Indexable {
     @Override
     public Document toDocument() {
         Document document = new Document();
-        document.add(new NumericDocValuesField(FieldConsts.type, (long) message.getType()));
+        document.add(new LongPoint(FieldConsts.type, (long) message.getType()));
         JSONObject headers = JSON.parseObject(message.getHeaders());
         document.add(new StringField(FieldConsts.clusterId, headers.getString(FieldConsts.clusterId), Field.Store.YES));
         document.add(new StringField(FieldConsts.appId, headers.getString(FieldConsts.appId), Field.Store.YES));

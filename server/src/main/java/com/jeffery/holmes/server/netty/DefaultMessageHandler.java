@@ -23,7 +23,7 @@ public class DefaultMessageHandler extends SimpleChannelInboundHandler<Object> {
             LOGGER.error("Error type for Message!");
         }
         Message message = (Message) object;
-        LOGGER.info("Message: " + JSON.toJSONString(message));
+        LOGGER.debug("Message: " + JSON.toJSONString(message));
         if (INDEX_WRITER != null) {
             INDEX_WRITER.addDocument(message.toDocument());
             INDEX_WRITER.commit();

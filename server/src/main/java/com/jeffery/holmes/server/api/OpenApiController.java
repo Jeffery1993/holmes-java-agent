@@ -26,8 +26,8 @@ public class OpenApiController {
     public JSONObject searchMonitorData(@RequestParam(required = false) String clusterId,
                                         @RequestParam(required = false) String appId,
                                         @RequestParam(required = false) CollectorEnum name,
-                                        @RequestParam(required = false) String startTime,
-                                        @RequestParam(required = false) String endTime,
+                                        @RequestParam(required = false) Long startTime,
+                                        @RequestParam(required = false) Long endTime,
                                         @RequestParam(required = false) boolean pretty) {
         try {
             return openApiService.searchMonitorData(clusterId, appId, name, startTime, endTime, pretty);

@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jeffery.holmes.server.consts.CollectorEnum;
+import com.jeffery.holmes.server.consts.DataCategoryEnum;
 import com.jeffery.holmes.server.consts.FieldConsts;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,8 @@ import java.io.IOException;
 @Service
 public class OpenApiService {
 
-    private static final int DEFAULT_MAX_HITS = 100;
+    private static final int DEFAULT_MAX_HITS_FOR_MONITOR = 1000;
+    private static final int DEFAULT_MAX_HITS_FOR_TRACE = 100;
 
     /**
      * Search for monitor data.
@@ -30,27 +33,36 @@ public class OpenApiService {
      * @return monitor data
      * @throws Exception
      */
-    public JSONObject searchMonitorData(String clusterId, String appId, CollectorEnum name, String startTime, String endTime, boolean pretty) throws Exception {
+    public JSONObject searchMonitorData(String clusterId, String appId, CollectorEnum name, Long startTime, Long endTime, boolean pretty) throws Exception {
         Query query = buildQuery(clusterId, appId, name, startTime, endTime);
-        TopDocs topDocs = IndexSearcherFactory.getIndexSearcher().search(query, DEFAULT_MAX_HITS);
+        Sort sort = new Sort(new SortField(FieldConsts.timestamp, SortField.Type.LONG));
+        TopDocs topDocs = IndexSearcherFactory.getIndexSearcher().search(query, DEFAULT_MAX_HITS_FOR_MONITOR, sort);
         return toJSONObject(topDocs, pretty);
     }
 
-    private Query buildQuery(String clusterId, String appId, CollectorEnum name, String startTime, String endTime) {
+    private Query buildQuery(String clusterId, String appId, CollectorEnum name, Long startTime, Long endTime) {
         BooleanQuery.Builder build = new BooleanQuery.Builder();
+        Query monitorQuery = LongPoint.newExactQuery(FieldConsts.type, (long) DataCategoryEnum.MONITOR.getCode());
+        build.add(monitorQuery, BooleanClause.Occur.MUST);
         if (!StringUtils.isEmpty(clusterId)) {
-            TermQuery clusterIdTerm = new TermQuery(new Term(FieldConsts.clusterId, clusterId));
-            build.add(clusterIdTerm, BooleanClause.Occur.MUST);
+            build.add(buildClause(FieldConsts.clusterId, clusterId));
         }
         if (!StringUtils.isEmpty(appId)) {
-            TermQuery appIdTerm = new TermQuery(new Term(FieldConsts.appId, appId));
-            build.add(appIdTerm, BooleanClause.Occur.MUST);
+            build.add(buildClause(FieldConsts.appId, appId));
         }
         if (name != null) {
-            TermQuery nameTerm = new TermQuery(new Term(FieldConsts.name, name.toString()));
-            build.add(nameTerm, BooleanClause.Occur.MUST);
+            build.add(buildClause(FieldConsts.name, name.toString()));
         }
+        long now = System.currentTimeMillis();
+        startTime = (startTime == null) ? now - 20 * 60 * 1000 : startTime;
+        endTime = (endTime == null) ? now : endTime;
+        build.add(LongPoint.newRangeQuery(FieldConsts.timestamp, startTime, endTime), BooleanClause.Occur.MUST);
         return build.build();
+    }
+
+    private BooleanClause buildClause(String field, String value) {
+        TermQuery termQuery = new TermQuery(new Term(field, value));
+        return new BooleanClause(termQuery, BooleanClause.Occur.MUST);
     }
 
     /**
@@ -65,23 +77,22 @@ public class OpenApiService {
      */
     public JSONObject searchTraceData(String clusterId, String appId, String traceId, boolean pretty) throws Exception {
         Query query = buildQuery(clusterId, appId, traceId);
-        TopDocs topDocs = IndexSearcherFactory.getIndexSearcher().search(query, DEFAULT_MAX_HITS);
+        TopDocs topDocs = IndexSearcherFactory.getIndexSearcher().search(query, DEFAULT_MAX_HITS_FOR_TRACE);
         return toJSONObject(topDocs, pretty);
     }
 
     private Query buildQuery(String clusterId, String appId, String traceId) {
         BooleanQuery.Builder build = new BooleanQuery.Builder();
+        Query traceQuery = LongPoint.newExactQuery(FieldConsts.type, (long) DataCategoryEnum.SPAN_EVENT.getCode());
+        build.add(traceQuery, BooleanClause.Occur.MUST);
         if (!StringUtils.isEmpty(clusterId)) {
-            TermQuery clusterIdTerm = new TermQuery(new Term(FieldConsts.clusterId, clusterId));
-            build.add(clusterIdTerm, BooleanClause.Occur.MUST);
+            build.add(buildClause(FieldConsts.clusterId, clusterId));
         }
         if (!StringUtils.isEmpty(appId)) {
-            TermQuery appIdTerm = new TermQuery(new Term(FieldConsts.appId, appId));
-            build.add(appIdTerm, BooleanClause.Occur.MUST);
+            build.add(buildClause(FieldConsts.appId, appId));
         }
         if (!StringUtils.isEmpty(traceId)) {
-            TermQuery traceIdTerm = new TermQuery(new Term(FieldConsts.traceId, traceId));
-            build.add(traceIdTerm, BooleanClause.Occur.MUST);
+            build.add(buildClause(FieldConsts.traceId, traceId));
         }
         return build.build();
     }

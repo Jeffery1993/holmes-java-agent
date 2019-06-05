@@ -1,4 +1,4 @@
-package com.jeffery.holmes.core.consts;
+package com.jeffery.holmes.server.consts;
 
 /**
  * Enum for data categories.
