@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view collector="JVM">
+
+    <graph type="line" aggregator="gc" title="GC">
+        <field function="SUM(ygcCount)" as="YGC次数"/>
+        <field function="SUM(ygcTime)" as="YGC时间"/>
+        <field function="SUM(fgcCount)" as="FGC次数"/>
+        <field function="SUM(fgcTime)" as="FGC时间"/>
+    </graph>
+
+    <graph type="line" aggregator="memory" title="内存">
+        <field function="AVG(heapMemoryUsage)" as="堆内存使用率"/>
+        <field function="AVG(nonHeapMemoryUsage)" as="非堆内存使用率"/>
+    </graph>
+
+    <table aggregator="memoryPool" title="内存分区" groupby="name">
+        <field function="LAST(init)/1048576" as="init(MB)"/>
+        <field function="LAST(used)/1048576" as="used(MB)"/>
+        <field function="LAST(committed)/1048576" as="committed(MB)"/>
+        <field function="LAST(max)/1048576" as="max(MB)"/>
+    </table>
+
+    <graph type="line" aggregator="thread" title="线程">
+        <field function="AVG(threadCount)" as="线程数"/>
+        <field function="AVG(peakThreadCount)" as="峰值线程数"/>
+        <field function="AVG(daemonThreadCount)" as="守护线程数"/>
+    </graph>
+
+    <graph type="line" aggregator="classLoading" title="类加载">
+        <field function="AVG(loadedClassCount)" as="当前类加载数"/>
+        <field function="AVG(totalLoadedClassCount)" as="类加载总数"/>
+        <field function="AVG(unloadedClassCount)" as="类卸载总数"/>
+    </graph>
+
+</view>

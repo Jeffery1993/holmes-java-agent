@@ -1,0 +1,44 @@
+{
+  "name": "JVM",
+  "hits": [
+    {
+      "name": "memory",
+      "columns": [
+        "heapMemoryUsage",
+        "nonHeapMemoryUsage"
+      ],
+      "data": [
+        {
+          "heapMemoryUsage": "2GB",
+          "nonHeapMemoryUsage": "1GB"
+        }
+      ]
+    },
+    {
+      "name": "memoryPool",
+      "columns": [
+        "name",
+        "init",
+        "used",
+        "committed",
+        "max"
+      ],
+      "data": [
+        {
+          "name": "Eden",
+          "init": "400MB",
+          "used": "400MB",
+          "committed": "500MB",
+          "max": "1GB"
+        },
+        {
+          "name": "Old Gen",
+          "init": "100MB",
+          "used": "200MB",
+          "committed": "500MB",
+          "max": "1GB"
+        }
+      ]
+    }
+  ]
+}

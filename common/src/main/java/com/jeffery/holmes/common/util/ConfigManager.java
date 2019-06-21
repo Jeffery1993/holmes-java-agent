@@ -20,6 +20,8 @@ public class ConfigManager {
     private static String hostId;
 
     private static final Properties AGENT_PROPERTIES = new Properties();
+    private static final int MINIMUM_COLLECT_INTERVAL = 5;
+    private static final int DEFAULT_COLLECT_INTERVAL = 60;
     private static final int DEFAULT_SERVER_PORT = 1024;
 
     static {
@@ -76,6 +78,21 @@ public class ConfigManager {
      */
     public static String getHostId() {
         return hostId;
+    }
+
+    /**
+     * Get collect interval.
+     *
+     * @return collect interval
+     */
+    public static int getCollectInterval() {
+        String collectInterval = getProperty(ConfigConsts.COLLECT_INTERVAL);
+        try {
+            int interval = Integer.parseInt(collectInterval);
+            return (interval < MINIMUM_COLLECT_INTERVAL) ? MINIMUM_COLLECT_INTERVAL : interval;
+        } catch (Exception e) {
+            return DEFAULT_COLLECT_INTERVAL;
+        }
     }
 
     /**

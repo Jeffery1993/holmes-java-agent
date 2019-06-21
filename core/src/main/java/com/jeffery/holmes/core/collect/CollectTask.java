@@ -1,6 +1,7 @@
 package com.jeffery.holmes.core.collect;
 
 import com.jeffery.holmes.common.collector.Collector;
+import com.jeffery.holmes.common.util.ConfigManager;
 import com.jeffery.holmes.core.base.AbstractScheduledTask;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class CollectTask extends AbstractScheduledTask {
 
     @Override
     protected long getPeriod() {
-        return 120;
+        return ConfigManager.getCollectInterval();
     }
 
     @Override

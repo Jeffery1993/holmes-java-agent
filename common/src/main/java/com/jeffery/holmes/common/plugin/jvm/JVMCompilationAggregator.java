@@ -4,8 +4,6 @@ import com.jeffery.holmes.common.collector.aggregator.AbstractAggregator;
 
 import java.lang.management.CompilationMXBean;
 import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
-import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +15,6 @@ public class JVMCompilationAggregator extends AbstractAggregator {
 
     public JVMCompilationAggregator() {
         compilationMXBean = ManagementFactory.getCompilationMXBean();
-        OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
-        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
     }
 
     @Override

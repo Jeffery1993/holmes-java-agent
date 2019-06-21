@@ -12,6 +12,8 @@ public interface ConfigConsts {
     String APP_ID = "appId";
     String HOST_ID = "hostId";
 
+    String COLLECT_INTERVAL = "collect.interval";
+
     String SERVER_IPS = "server.ips";
     String SERVER_PORT = "server.port";
 

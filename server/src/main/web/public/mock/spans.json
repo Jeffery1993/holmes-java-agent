@@ -1,0 +1,53 @@
+{
+  "hits": [
+    {
+      "traceId": "demo-1024-1",
+      "url": "/api/car",
+      "method": "GET",
+      "startTime": "2019-06-16 13:48:00"
+    },
+    {
+      "traceId": "demo-1024-2",
+      "url": "/api/car",
+      "method": "POST",
+      "startTime": "2019-06-17 13:48:00"
+    },
+    {
+      "traceId": "demo-1024-3",
+      "url": "/api/car",
+      "method": "DELETE",
+      "startTime": "2019-06-18 13:48:00"
+    },
+    {
+      "traceId": "demo-1024-4",
+      "url": "/api/car",
+      "method": "PUT",
+      "startTime": "2019-06-19 13:48:00"
+    },
+    {
+      "traceId": "demo-1024-5",
+      "url": "/api/car",
+      "method": "GET",
+      "startTime": "2019-06-20 13:48:00"
+    },
+    {
+      "traceId": "demo-1024-6",
+      "url": "/api/car",
+      "method": "POST",
+      "startTime": "2019-06-21 13:48:00"
+    },
+    {
+      "traceId": "demo-1024-7",
+      "url": "/api/car",
+      "method": "DELETE",
+      "startTime": "2019-06-22 13:48:00"
+    },
+    {
+      "traceId": "demo-1024-8",
+      "url": "/api/car",
+      "method": "PUT",
+      "startTime": "2019-06-23 13:48:00"
+    }
+  ],
+  "total": 8
+}

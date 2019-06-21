@@ -1,0 +1,59 @@
+{
+  "hits": [
+    {
+      "className": "org/apache/http/impl/client/InternalHttpClient",
+      "error": false,
+      "eventType": "HttpClient",
+      "methodName": "doExecute",
+      "nextSpanId": "1-1",
+      "parameters": {
+        "method": "GET"
+      },
+      "spanEventId": "1-1",
+      "spanId": "1",
+      "startTime": 1559738975803,
+      "traceId": "demo-1024-1",
+      "usedTime": 4
+    },
+    {
+      "className": "org/apache/catalina/core/StandardHostValve",
+      "error": false,
+      "eventType": "Tomcat",
+      "methodName": "invoke",
+      "parameters": {
+        "method": "GET"
+      },
+      "spanEventId": "1",
+      "spanId": "1-1",
+      "startTime": 1559738975804,
+      "traceId": "demo-1024-1",
+      "usedTime": 3
+    },
+    {
+      "className": "org/apache/catalina/core/StandardHostValve",
+      "error": false,
+      "eventType": "Tomcat",
+      "methodName": "invoke",
+      "parameters": {
+        "method": "GET"
+      },
+      "spanEventId": "1",
+      "spanId": "1",
+      "startTime": 1559738975802,
+      "traceId": "demo-1024-1",
+      "usedTime": 6
+    },
+    {
+      "className": "com/mysql/jdbc/PreparedStatement",
+      "error": false,
+      "eventType": "Mysql",
+      "methodName": "executeQuery",
+      "spanEventId": "1-1",
+      "spanId": "1-1",
+      "startTime": 1559738975805,
+      "traceId": "demo-1024-1",
+      "usedTime": 0
+    }
+  ],
+  "total": 4
+}

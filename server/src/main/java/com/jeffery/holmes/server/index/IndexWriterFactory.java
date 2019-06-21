@@ -26,7 +26,7 @@ public class IndexWriterFactory {
             Directory dir = FSDirectory.open(Paths.get(PathConsts.DATA_DIR));
             Analyzer analyzer = new StandardAnalyzer();
             IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
-            indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+            indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
             indexWriter = new IndexWriter(dir, indexWriterConfig);
         } catch (IOException e) {
             LOGGER.error("Failed to init IndexWriter due to " + e.getMessage());
