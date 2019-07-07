@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view collector="JVMInfo">
+
+    <table aggregator="os" title="操作系统信息">
+        <field function="LAST(name)" as="操作系统名称"/>
+        <field function="LAST(version)" as="操作系统版本"/>
+        <field function="LAST(arch)" as="操作系统架构"/>
+        <field function="LAST(availableProcessors)" as="处理器数目"/>
+    </table>
+
+    <table aggregator="runtime" title="运行时信息">
+        <field function="LAST(name)" as="实例名称"/>
+        <field function="LAST(vmName)" as="虚拟机名称"/>
+        <field function="LAST(vmVendor)" as="虚拟机供应商"/>
+        <field function="LAST(vmVersion)" as="虚拟机版本"/>
+        <field function="LAST(startTime)" as="启动时间"/>
+        <field function="LAST(inputArguments)" as="启动参数"/>
+    </table>
+
+</view>

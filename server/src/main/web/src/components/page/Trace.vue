@@ -1,5 +1,5 @@
 <template>
-    <div class="table">
+    <div class="trace">
         <div class="container">
             <div class="handle-box">
                 <el-button>集群ID</el-button>
@@ -203,9 +203,8 @@
         display: inline-block;
     }
 
-    .table {
+    .trace {
         width: 100%;
-        font-size: 14px;
     }
 
     .mr10 {

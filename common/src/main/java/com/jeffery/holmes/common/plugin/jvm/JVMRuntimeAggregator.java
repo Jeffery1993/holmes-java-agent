@@ -1,6 +1,7 @@
 package com.jeffery.holmes.common.plugin.jvm;
 
 import com.jeffery.holmes.common.collector.aggregator.AbstractAggregator;
+import com.jeffery.holmes.common.util.DateUtils;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -30,10 +31,7 @@ public class JVMRuntimeAggregator extends AbstractAggregator {
         map.put("vmName", runtimeMXBean.getVmName());
         map.put("vmVendor", runtimeMXBean.getVmVendor());
         map.put("vmVersion", runtimeMXBean.getVmVersion());
-        map.put("specName", runtimeMXBean.getSpecName());
-        map.put("specVendor", runtimeMXBean.getSpecVendor());
-        map.put("specVersion", runtimeMXBean.getSpecVersion());
-        map.put("startTime", runtimeMXBean.getStartTime());
+        map.put("startTime", DateUtils.format(runtimeMXBean.getStartTime()));
         map.put("inputArguments", runtimeMXBean.getInputArguments());
         list.add(map);
         return list;

@@ -27,6 +27,7 @@ public class PreparedStatementTransformer extends AccurateMatchedTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws Exception {
         CtClass ctClass = JavassistUtils.makeCtClass(classfileBuffer);
         CollectorManager.register(MysqlCollector.getInstance());
+        MysqlCollector.getInstance().setVersion(protectionDomain.getCodeSource());
         try {
             CtMethod executeMethod = ctClass.getDeclaredMethod("execute");
             CtMethod executeQueryMethod = ctClass.getDeclaredMethod("executeQuery");
@@ -36,7 +37,7 @@ public class PreparedStatementTransformer extends AccurateMatchedTransformer {
             enhanceCtMethod(className, executeUpdateMethod);
         } catch (Exception e) {
             MysqlCollector.getInstance().setEnabled(false);
-            throw new Exception(e);
+            throw e;
         }
         byte[] bytecode = ctClass.toBytecode();
         ctClass.defrost();

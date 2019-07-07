@@ -5,24 +5,22 @@ import com.jeffery.holmes.common.collector.Collector;
 
 public class JVMCollector extends AbstractCollector {
 
-    private JVMGCAggregator jvmGcAggregator = new JVMGCAggregator();
-    private JVMMemoryAggregator jvmMemoryAggregator = new JVMMemoryAggregator();
-    private JVMMemoryPoolAggregator jvmMemoryPoolAggregator = new JVMMemoryPoolAggregator();
-    private JVMThreadAggregator jvmThreadAggregator = new JVMThreadAggregator();
-    private JVMClassLoadingAggregator jvmClassLoadingAggregator = new JVMClassLoadingAggregator();
-    private JVMCompilationAggregator jvmCompilationAggregator = new JVMCompilationAggregator();
-
     private JVMCollector() {
-        this.add(jvmGcAggregator);
-        this.add(jvmMemoryAggregator);
-        this.add(jvmMemoryPoolAggregator);
-        this.add(jvmThreadAggregator);
-        this.add(jvmClassLoadingAggregator);
-        this.add(jvmCompilationAggregator);
+        this.add(new JVMGCAggregator());
+        try {
+            this.add(new JVMCpuAggregator());
+        } catch (Exception e) {
+        }
+        this.add(new JVMMemoryAggregator());
+        this.add(new JVMMemoryPoolAggregator());
+        this.add(new JVMThreadAggregator());
+        this.add(new JVMClassLoadingAggregator());
     }
 
+    private static final JVMCollector INSTANCE = new JVMCollector();
+
     public static Collector getInstance() {
-        return new JVMCollector();
+        return INSTANCE;
     }
 
 }

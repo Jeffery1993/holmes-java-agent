@@ -23,6 +23,7 @@ public class SpanEvent extends SpanEventData {
         this.setClassName(className);
         this.setMethodName(methodName);
         this.setEventType(eventType);
+        this.setArgument(argument);
         this.setStartTime(System.currentTimeMillis());
     }
 

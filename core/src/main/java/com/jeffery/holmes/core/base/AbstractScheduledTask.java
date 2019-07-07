@@ -1,13 +1,18 @@
 package com.jeffery.holmes.core.base;
 
+import com.jeffery.holmes.common.util.LoggerFactory;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 /**
  * Abstract class for scheduled task.
  */
 public abstract class AbstractScheduledTask {
+
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 

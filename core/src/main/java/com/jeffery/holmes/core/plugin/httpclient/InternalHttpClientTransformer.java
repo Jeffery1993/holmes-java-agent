@@ -29,13 +29,14 @@ public class InternalHttpClientTransformer extends AccurateMatchedTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws Exception {
         CtClass ctClass = JavassistUtils.makeCtClass(classfileBuffer);
         CollectorManager.register(HttpClientCollector.getInstance());
+        HttpClientCollector.getInstance().setVersion(protectionDomain.getCodeSource());
         try {
             CtClass[] params = JavassistUtils.buildParams("org.apache.http.HttpHost", "org.apache.http.HttpRequest", "org.apache.http.protocol.HttpContext");
             CtMethod doExecuteMethod = ctClass.getDeclaredMethod("doExecute", params);
             enhanceCtMethod(className, doExecuteMethod);
         } catch (Exception e) {
             HttpClientCollector.getInstance().setEnabled(false);
-            throw new Exception(e);
+            throw e;
         }
         byte[] bytecode = ctClass.toBytecode();
         ctClass.defrost();

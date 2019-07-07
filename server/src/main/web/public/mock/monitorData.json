@@ -3,42 +3,95 @@
   "hits": [
     {
       "name": "memory",
-      "columns": [
-        "heapMemoryUsage",
-        "nonHeapMemoryUsage"
-      ],
-      "data": [
-        {
-          "heapMemoryUsage": "2GB",
-          "nonHeapMemoryUsage": "1GB"
-        }
-      ]
+      "graph": {
+        "title": "内存",
+        "xAxis": {
+          "data": [
+            "2019-06-23 10:00",
+            "2019-06-23 10:02",
+            "2019-06-23 10:04",
+            "2019-06-23 10:06",
+            "2019-06-23 10:08",
+            "2019-06-23 10:10",
+            "2019-06-23 10:12"
+          ]
+        },
+        "yAxis": {
+          "axisLabel": "{value} GB"
+        },
+        "series": [
+          {
+            "name": "heapMemoryUsage",
+            "type": "line",
+            "data": [
+              2,
+              3,
+              4,
+              3,
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "name": "nonHeapMemoryUsage",
+            "type": "line",
+            "data": [
+              1,
+              1.1,
+              1.2,
+              1.5,
+              1.5,
+              1.5,
+              1.5
+            ]
+          }
+        ]
+      }
     },
     {
       "name": "memoryPool",
-      "columns": [
-        "name",
-        "init",
-        "used",
-        "committed",
-        "max"
-      ],
-      "data": [
-        {
-          "name": "Eden",
-          "init": "400MB",
-          "used": "400MB",
-          "committed": "500MB",
-          "max": "1GB"
-        },
-        {
-          "name": "Old Gen",
-          "init": "100MB",
-          "used": "200MB",
-          "committed": "500MB",
-          "max": "1GB"
-        }
-      ]
+      "table": {
+        "title": "内存分区",
+        "columns": [
+          {
+            "prop": "name",
+            "label": "名称"
+          },
+          {
+            "prop": "init",
+            "label": "初始内存"
+          },
+          {
+            "prop": "used",
+            "label": "使用内存"
+          },
+          {
+            "prop": "committed",
+            "label": "当前分配内存"
+          },
+          {
+            "prop": "max",
+            "label": "最大内存"
+          }
+        ],
+        "data": [
+          {
+            "name": "Eden",
+            "init": "400MB",
+            "used": "400MB",
+            "committed": "500MB",
+            "max": "1GB"
+          },
+          {
+            "name": "Old Gen",
+            "init": "100MB",
+            "used": "200MB",
+            "committed": "500MB",
+            "max": "1GB"
+          }
+        ]
+      }
     }
   ]
 }

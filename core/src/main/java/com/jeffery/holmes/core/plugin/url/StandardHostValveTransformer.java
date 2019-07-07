@@ -28,14 +28,14 @@ public class StandardHostValveTransformer extends AccurateMatchedTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws Exception {
         CtClass ctClass = JavassistUtils.makeCtClass(classfileBuffer);
         CollectorManager.register(UrlCollector.getInstance());
-
+        UrlCollector.getInstance().setVersion(protectionDomain.getCodeSource());
         try {
             CtClass[] params = JavassistUtils.buildParams("org.apache.catalina.connector.Request", "org.apache.catalina.connector.Response");
             CtMethod ctMethod = ctClass.getDeclaredMethod("invoke", params);
             enhanceCtMethod(className, ctMethod);
         } catch (Exception e) {
             UrlCollector.getInstance().setEnabled(false);
-            throw new Exception(e);
+            throw e;
         }
         byte[] bytecode = ctClass.toBytecode();
         ctClass.defrost();

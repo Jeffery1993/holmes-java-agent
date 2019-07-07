@@ -14,6 +14,7 @@ public abstract class AbstractAggregator implements Aggregator {
         return enabled;
     }
 
+    @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }

@@ -1,16 +1,21 @@
 package com.jeffery.holmes.common.collector;
 
 import com.jeffery.holmes.common.collector.aggregator.Aggregator;
+import com.jeffery.holmes.common.util.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Abstract class for {@link Collector}. A collector consists of one or more {@link Aggregator}(s).
  */
 public abstract class AbstractCollector implements Collector<Aggregator> {
+
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected String name;
     protected boolean enabled = true;
@@ -49,7 +54,12 @@ public abstract class AbstractCollector implements Collector<Aggregator> {
         // collect data from aggregators
         for (Aggregator aggregator : aggregators) {
             if (aggregator.isEnabled()) {
-                map.put(aggregator.getName(), aggregator.harvest());
+                try {
+                    map.put(aggregator.getName(), aggregator.harvest());
+                } catch (Throwable throwable) {
+                    logger.log(Level.SEVERE, "Failed to harvest data from [" + aggregator.getName() + "], " + throwable.getMessage(), throwable);
+                    aggregator.setEnabled(false);
+                }
             }
         }
         return map;

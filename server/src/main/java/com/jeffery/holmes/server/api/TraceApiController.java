@@ -26,7 +26,7 @@ public class TraceApiController {
         try {
             return traceApiService.getClusters();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }
@@ -36,7 +36,7 @@ public class TraceApiController {
         try {
             return traceApiService.getApps(clusterId);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }
@@ -50,7 +50,7 @@ public class TraceApiController {
         try {
             return traceApiService.getSpans(clusterId, appId, traceId, page, pageSize);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }
@@ -60,7 +60,7 @@ public class TraceApiController {
         try {
             return traceApiService.getSpanEvents(traceId);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }

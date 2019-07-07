@@ -5,16 +5,15 @@ import com.jeffery.holmes.common.collector.Collector;
 
 public class JVMInfoCollector extends AbstractCollector {
 
-    private JVMOSAggregator jvmOsAggregator = new JVMOSAggregator();
-    private JVMRuntimeAggregator jvmRuntimeAggregator = new JVMRuntimeAggregator();
-
     private JVMInfoCollector() {
-        this.add(jvmOsAggregator);
-        this.add(jvmRuntimeAggregator);
+        this.add(new JVMOSAggregator());
+        this.add(new JVMRuntimeAggregator());
     }
 
+    private static final JVMInfoCollector INSTANCE = new JVMInfoCollector();
+
     public static Collector getInstance() {
-        return new JVMInfoCollector();
+        return INSTANCE;
     }
 
 }

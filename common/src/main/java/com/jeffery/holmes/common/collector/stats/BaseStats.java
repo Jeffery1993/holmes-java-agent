@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class BaseStats implements Stats {
 
+    protected static final long RADIX = 1000000L;
+
     // count of invocations
     private AtomicInteger invokeCount = new AtomicInteger(0);
     // count of errors
@@ -50,12 +52,12 @@ public class BaseStats implements Stats {
     @Override
     public Map<String, Object> harvest() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        map.put("invokeCount", invokeCount.get());
-        map.put("errorCount", errorCount.get());
-        map.put("totalTime", totalTime.get());
-        map.put("maxTime", maxTime.get());
-        map.put("runningCount", runningCount.get());
-        map.put("concurrentMax", concurrentMax.get());
+        map.put("invokeCount", invokeCount.getAndSet(0));
+        map.put("errorCount", errorCount.getAndSet(0));
+        map.put("totalTime", totalTime.getAndSet(0L) / RADIX);
+        map.put("maxTime", maxTime.getAndSet(0L) / RADIX);
+        map.put("runningCount", runningCount.getAndSet(0));
+        map.put("concurrentMax", concurrentMax.getAndSet(0));
         return map;
     }
 

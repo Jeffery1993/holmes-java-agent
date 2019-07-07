@@ -5,6 +5,6 @@ package com.jeffery.holmes.server.consts;
  */
 public enum CollectorEnum {
 
-    JVM, Url, HttpClient, Mysql;
+    JVM, JVMInfo, Url, HttpClient, Mysql;
 
 }

@@ -4,17 +4,22 @@
     <table aggregator="mysql" title="Mysql监控" groupby="sql">
         <field function="SUM(invokeCount)" as="调用次数"/>
         <field function="SUM(errorCount)" as="错误次数"/>
-        <field function="SUM(totalTime)" as="总时间"/>
-        <field function="SUM(invokeCount)/SUM(totalTime)" as="平均耗时"/>
-        <field function="MAX(maxTime)" as="最大耗时"/>
+        <field function="SUM(totalTime)" as="总时间(ms)"/>
+        <!--<field function="SUM(invokeCount)/SUM(totalTime)" as="平均耗时"/>-->
+        <field function="MAX(maxTime)" as="最大耗时(ms)"/>
         <field function="LAST(runningCount)" as="当前并发"/>
-        <field function="MAX(concurrentMax)" as="最大耗时"/>
+        <field function="MAX(concurrentMax)" as="最大并发"/>
         <field function="SUM(ms0_1)" as="0-1ms"/>
         <field function="SUM(ms1_10)" as="1-10ms"/>
         <field function="SUM(ms10_100)" as="10-100ms"/>
         <field function="SUM(ms100_1000)" as="100-1000ms"/>
         <field function="SUM(s1_10)" as="1-10s"/>
         <field function="SUM(s10_n)" as="10s以上"/>
+    </table>
+
+    <table aggregator="exception" title="异常" groupby="exception,message">
+        <field function="SUM(count)" as="异常次数"/>
+        <field function="LAST(stackTrace)" as="异常堆栈"/>
     </table>
 
     <table aggregator="version" title="版本号">

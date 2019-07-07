@@ -30,10 +30,10 @@ public class JVMMemoryPoolAggregator extends AbstractAggregator {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", memoryPoolMXBean.getName());
             MemoryUsage memoryUsage = memoryPoolMXBean.getUsage();
-            map.put("init", memoryUsage.getInit());
-            map.put("used", memoryUsage.getUsed());
-            map.put("committed", memoryUsage.getCommitted());
-            map.put("max", memoryUsage.getMax());
+            map.put("init", memoryUsage.getInit() >> 20);
+            map.put("used", memoryUsage.getUsed() >> 20);
+            map.put("committed", memoryUsage.getCommitted() >> 20);
+            map.put("max", memoryUsage.getMax() >> 20);
             list.add(map);
         }
         return list;

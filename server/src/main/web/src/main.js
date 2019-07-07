@@ -8,12 +8,14 @@ import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 import './assets/css/icon.css';
 import './components/common/directives';
 import "babel-polyfill";
+import echarts from 'echarts'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, {
     size: 'small'
 });
 Vue.prototype.$axios = axios;
+Vue.prototype.$echarts = echarts
 
 
 //使用钩子函数对路由进行权限跳转

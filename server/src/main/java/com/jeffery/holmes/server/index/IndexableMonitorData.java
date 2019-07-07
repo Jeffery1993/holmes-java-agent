@@ -32,7 +32,7 @@ public class IndexableMonitorData implements Indexable {
         document.add(new LongPoint(FieldConsts.timestamp, timestamp));
         document.add(new NumericDocValuesField(FieldConsts.timestamp, timestamp));
         document.add(new StoredField(FieldConsts.timestamp, timestamp));
-        document.add(new TextField(FieldConsts.body, message.getBody(), Field.Store.YES));
+        document.add(new StoredField(FieldConsts.body, message.getBody()));
         return document;
     }
 

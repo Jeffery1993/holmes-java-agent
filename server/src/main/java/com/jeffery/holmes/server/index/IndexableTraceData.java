@@ -28,7 +28,7 @@ public class IndexableTraceData implements Indexable {
         document.add(new StringField(FieldConsts.appId, headers.getString(FieldConsts.appId), Field.Store.YES));
         document.add(new SortedDocValuesField(FieldConsts.appId, new BytesRef(headers.getString(FieldConsts.appId))));
         document.add(new StringField(FieldConsts.traceId, headers.getString(FieldConsts.traceId), Field.Store.YES));
-        document.add(new TextField(FieldConsts.body, message.getBody(), Field.Store.YES));
+        document.add(new StoredField(FieldConsts.body, message.getBody()));
         return document;
     }
 

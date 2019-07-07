@@ -25,6 +25,13 @@ public interface Aggregator {
     boolean isEnabled();
 
     /**
+     * Set the enabled status of aggregator.
+     *
+     * @param enabled
+     */
+    void setEnabled(boolean enabled);
+
+    /**
      * Get the data of the aggregator.
      *
      * @return data

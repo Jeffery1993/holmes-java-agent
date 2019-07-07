@@ -26,8 +26,8 @@ public class JVMMemoryAggregator extends AbstractAggregator {
     public List<Map<String, Object>> harvest() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("heapMemoryUsage", memoryMXBean.getHeapMemoryUsage());
-        map.put("nonHeapMemoryUsage", memoryMXBean.getNonHeapMemoryUsage());
+        map.put("heapMemoryUsage", memoryMXBean.getHeapMemoryUsage().getUsed() >> 20);
+        map.put("nonHeapMemoryUsage", memoryMXBean.getNonHeapMemoryUsage().getUsed() >> 20);
         list.add(map);
         return list;
     }

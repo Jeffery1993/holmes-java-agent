@@ -7,6 +7,7 @@ import com.jeffery.holmes.core.base.AbstractScheduledTask;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class CollectTask extends AbstractScheduledTask {
 
@@ -24,11 +25,17 @@ public class CollectTask extends AbstractScheduledTask {
         return new Runnable() {
             @Override
             public void run() {
+                logger.info("Enter collect task");
                 List<Collector> collectors = CollectorManager.getCollectors();
                 for (Collector collector : collectors) {
                     if (collector.isEnabled()) {
-                        Map<String, Object> res = collector.collect();
-                        DataQueueService.getInstance().offer(res);
+                        try {
+                            Map<String, Object> res = collector.collect();
+                            DataQueueService.getInstance().offer(res);
+                        } catch (Throwable throwable) {
+                            logger.log(Level.SEVERE, "Failed to collect data from [" + collector.getName() + "], " + throwable.getMessage(), throwable);
+                            collector.setEnabled(false);
+                        }
                     }
                 }
             }

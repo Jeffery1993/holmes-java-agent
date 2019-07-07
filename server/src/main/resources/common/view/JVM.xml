@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view collector="JVM">
 
-    <graph type="line" aggregator="gc" title="GC">
-        <field function="SUM(ygcCount)" as="YGC次数"/>
-        <field function="SUM(ygcTime)" as="YGC时间"/>
-        <field function="SUM(fgcCount)" as="FGC次数"/>
-        <field function="SUM(fgcTime)" as="FGC时间"/>
+    <graph aggregator="gc" title="GC">
+        <field name="ygcCount" as="YGC次数"/>
+        <field name="ygcTime" as="YGC时间(ms)"/>
+        <field name="fgcCount" as="FGC次数"/>
+        <field name="fgcTime" as="FGC时间(ms)"/>
     </graph>
 
-    <graph type="line" aggregator="memory" title="内存">
-        <field function="AVG(heapMemoryUsage)" as="堆内存使用率"/>
-        <field function="AVG(nonHeapMemoryUsage)" as="非堆内存使用率"/>
+    <graph aggregator="cpu" title="CPU使用率">
+        <field name="cpuRatio" as="CPU使用率(%)"/>
+    </graph>
+
+    <graph aggregator="memory" title="内存">
+        <field name="heapMemoryUsage" as="堆内存(MB)"/>
+        <field name="nonHeapMemoryUsage" as="非堆内存(MB)"/>
     </graph>
 
     <table aggregator="memoryPool" title="内存分区" groupby="name">
-        <field function="LAST(init)/1048576" as="init(MB)"/>
-        <field function="LAST(used)/1048576" as="used(MB)"/>
-        <field function="LAST(committed)/1048576" as="committed(MB)"/>
-        <field function="LAST(max)/1048576" as="max(MB)"/>
+        <field function="LAST(init)" as="init(MB)"/>
+        <field function="LAST(used)" as="used(MB)"/>
+        <field function="LAST(committed)" as="committed(MB)"/>
+        <field function="LAST(max)" as="max(MB)"/>
     </table>
 
-    <graph type="line" aggregator="thread" title="线程">
-        <field function="AVG(threadCount)" as="线程数"/>
-        <field function="AVG(peakThreadCount)" as="峰值线程数"/>
-        <field function="AVG(daemonThreadCount)" as="守护线程数"/>
+    <graph aggregator="thread" title="线程">
+        <field name="threadCount" as="线程数"/>
+        <field name="peakThreadCount" as="峰值线程数"/>
+        <field name="daemonThreadCount" as="守护线程数"/>
     </graph>
 
-    <graph type="line" aggregator="classLoading" title="类加载">
-        <field function="AVG(loadedClassCount)" as="当前类加载数"/>
-        <field function="AVG(totalLoadedClassCount)" as="类加载总数"/>
-        <field function="AVG(unloadedClassCount)" as="类卸载总数"/>
+    <graph aggregator="classLoading" title="类加载">
+        <field name="loadedClassCount" as="当前类加载数"/>
+        <field name="totalLoadedClassCount" as="类加载总数"/>
     </graph>
 
 </view>

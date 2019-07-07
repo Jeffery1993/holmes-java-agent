@@ -2,22 +2,33 @@ package com.jeffery.holmes.common.plugin.url;
 
 import com.jeffery.holmes.common.collector.AbstractCollector;
 import com.jeffery.holmes.common.collector.aggregator.PrimaryKey;
+import com.jeffery.holmes.common.plugin.common.DefaultExceptionAggregator;
+import com.jeffery.holmes.common.plugin.common.DefaultVersionAggregator;
 
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UrlCollector extends AbstractCollector {
 
     private UrlStatsAggregator urlStatsAggregator = new UrlStatsAggregator();
+    private DefaultExceptionAggregator exceptionAggregator = new DefaultExceptionAggregator();
+    private DefaultVersionAggregator versionAggregator = new DefaultVersionAggregator();
 
     private UrlCollector() {
         this.add(urlStatsAggregator);
+        this.add(exceptionAggregator);
+        this.add(versionAggregator);
     }
 
     private static final UrlCollector INSTANCE = new UrlCollector();
 
     public static UrlCollector getInstance() {
         return INSTANCE;
+    }
+
+    public void setVersion(CodeSource codeSource) {
+        versionAggregator.setVersion(codeSource);
     }
 
     public boolean onFilter(String url) {
@@ -36,6 +47,7 @@ public class UrlCollector extends AbstractCollector {
             return;
         }
         urlStatsAggregator.onThrowable(throwable);
+        exceptionAggregator.onThrowable(throwable);
     }
 
     public void onFinally() {

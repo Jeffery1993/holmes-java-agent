@@ -27,7 +27,7 @@ public class MonitorApiController {
         try {
             return monitorApiService.getClusters();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }
@@ -37,7 +37,7 @@ public class MonitorApiController {
         try {
             return monitorApiService.getApps(clusterId);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }
@@ -47,7 +47,7 @@ public class MonitorApiController {
         try {
             return monitorApiService.getCollectors();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }
@@ -60,7 +60,7 @@ public class MonitorApiController {
         try {
             return monitorApiService.getMonitorData(appId, collector, startTime, endTime);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage(), e);
         }
         return new JSONObject();
     }

@@ -1,7 +1,6 @@
 package com.jeffery.holmes.server.api;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jeffery.holmes.server.consts.DataCategoryEnum;
 import com.jeffery.holmes.server.consts.FieldConsts;
@@ -9,17 +8,22 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
-import org.apache.lucene.search.grouping.GroupDocs;
 import org.apache.lucene.search.grouping.GroupingSearch;
 import org.apache.lucene.search.grouping.TopGroups;
 import org.apache.lucene.util.BytesRef;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class AbstractService {
+
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected static final int DEFAULT_MAX_HITS_FOR_MONITOR = 1000;
     protected static final int DEFAULT_MAX_HITS_FOR_TRACE = 100;
@@ -44,8 +48,7 @@ public abstract class AbstractService {
         Query query = getDefaultQuery();
         TopGroups<BytesRef> topGroups = groupSearch(FieldConsts.clusterId, query, getIndexSearcher());
         JSONObject res = new JSONObject();
-        JSONArray hits = new JSONArray(getAllGroupValues(topGroups));
-        res.put("hits", hits);
+        res.put("hits", getGroupValues(topGroups));
         return res;
     }
 
@@ -65,8 +68,7 @@ public abstract class AbstractService {
         Query query = build.build();
         TopGroups<BytesRef> topGroups = groupSearch(FieldConsts.appId, query, getIndexSearcher());
         JSONObject res = new JSONObject();
-        JSONArray hits = new JSONArray(getAllGroupValues(topGroups));
-        res.put("hits", hits);
+        res.put("hits", getGroupValues(topGroups));
         return res;
     }
 
@@ -80,12 +82,10 @@ public abstract class AbstractService {
         return groupingSearch.search(indexSearcher, query, 0, 1000);
     }
 
-    private List<Object> getAllGroupValues(TopGroups<BytesRef> topGroups) {
-        List<Object> list = new ArrayList<>();
-        for (GroupDocs<BytesRef> groupDocs : topGroups.groups) {
-            list.add(groupDocs.groupValue.utf8ToString());
-        }
-        return list;
+    private List<Object> getGroupValues(TopGroups<BytesRef> topGroups) {
+        return Stream.of(topGroups.groups)
+                .map(groupDocs -> groupDocs.groupValue.utf8ToString())
+                .collect(Collectors.toList());
     }
 
     protected BooleanClause buildBooleanClause(String field, String value) {
@@ -93,29 +93,38 @@ public abstract class AbstractService {
         return new BooleanClause(termQuery, BooleanClause.Occur.MUST);
     }
 
-    protected JSONArray toJSONArray(ScoreDoc[] scoreDoc) throws IOException {
-        return toJSONArray(scoreDoc, 0, scoreDoc.length);
+    protected <T> List<T> toObjectList(ScoreDoc[] scoreDoc, Class<T> clazz) throws IOException {
+        return toObjectList(scoreDoc, 0, scoreDoc.length, clazz);
     }
 
-    protected JSONArray toJSONArray(ScoreDoc[] scoreDocs, int start, int end) throws IOException {
-        JSONArray hits = new JSONArray();
+    protected <T> List<T> toObjectList(ScoreDoc[] scoreDocs, int start, int end, Class<T> clazz) throws IOException {
+        List<T> list = new ArrayList<>();
+        IndexSearcher indexSearcher = getIndexSearcher();
+        start = (start < 0) ? 0 : start;
+        end = (end > scoreDocs.length) ? scoreDocs.length : end;
+        for (int i = start; i < end; i++) {
+            Document document = indexSearcher.doc(scoreDocs[i].doc);
+            T body = JSON.parseObject(document.get(FieldConsts.body), clazz);
+            list.add(body);
+        }
+        return list;
+    }
+
+    protected List<JSONObject> toObjectList(ScoreDoc[] scoreDoc) throws IOException {
+        return toObjectList(scoreDoc, 0, scoreDoc.length);
+    }
+
+    protected List<JSONObject> toObjectList(ScoreDoc[] scoreDocs, int start, int end) throws IOException {
+        List<JSONObject> list = new ArrayList<>();
         IndexSearcher indexSearcher = getIndexSearcher();
         start = (start < 0) ? 0 : start;
         end = (end > scoreDocs.length) ? scoreDocs.length : end;
         for (int i = start; i < end; i++) {
             Document document = indexSearcher.doc(scoreDocs[i].doc);
             JSONObject body = JSON.parseObject(document.get(FieldConsts.body));
-            hits.add(body);
+            list.add(body);
         }
-        return hits;
-    }
-
-    protected JSONObject toJSONObject(TopDocs topDocs) throws IOException {
-        JSONObject res = new JSONObject();
-        res.put("total", topDocs.totalHits);
-        JSONArray hits = toJSONArray(topDocs.scoreDocs);
-        res.put("hits", hits);
-        return res;
+        return list;
     }
 
 }
