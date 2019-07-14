@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +14,13 @@ import java.sql.SQLException;
 @Repository
 public class CalleeDao {
 
-    @Autowired
+    @Autowired(required = false)
     private Connection connection;
 
-    public JSONArray getCars(Integer page, Integer pageSize) throws SQLException {
+    public JSONArray getCars(Integer page, Integer pageSize) throws SQLException, IOException {
+        if (connection == null) {
+            throw new IOException("Could not connect to database!");
+        }
         PreparedStatement preparedStatement = connection.prepareStatement("select * from car_info limit ? offset ?");
         if (page == null || page < 1) {
             page = 1;

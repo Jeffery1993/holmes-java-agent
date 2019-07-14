@@ -5,7 +5,7 @@
 
     <groupId>com.jeffery.holmes</groupId>
     <artifactId>holmes-all</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <name>holmes-all</name>

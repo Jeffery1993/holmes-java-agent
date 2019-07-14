@@ -16,47 +16,47 @@
     <img src="https://img.shields.io/github/release/Jeffery1993/holmes-java-agent.svg" alt="GitHub release">
 </a>
   
-Holmes-java-agent是一个基于字节码增强技术实现的Java应用性能监控工具。
+Holmes-java-agent is a tool for java application performance monitoring, which is based on bytecode enhancement.
 
-## 截图 ##
-### 调用链 ###
+## Screenshots ##
+### Trace ###
 ![Image text](screenshots/trace.png)
 
-### 监控 ###
+### Monitor ###
 ![Image text](screenshots/monitor.png)
 
-## 特点 ##
-- [x] 无侵入式分布式调用链和应用性能监控
-- [x] 存储和搜索采用lucene，除JRE环境外无需其他中间件
-- [x] 配套前端页面实现调用链搜索和监控数据可视化
+## Features ##
+- [x] Non-invasive distributed-tracing and Java application performance monitor
+- [x] No middle-wares are needed except JRE
+- [x] A web page is developed for searching and visualization
 
-## 试用 ##
+## Tutorial ##
 ```
-// 解压已经打好的Release包
+// unzip the downloaded package
 unzip holmes-java-agent.zip
-// 进入解压后的目录
+// goto the unzipped directory
 cd holmes-java-agent
-// 启动服务端，浏览器访问"http://localhost:8080"
+// start the server and visit "http://localhost:8080"
 java -jar holmes-server.jar
-// 启动demo程序，浏览器访问"http://localhost:1234/swagger-ui.html"
+// start the demo with agent and visit "http://localhost:1234/swagger-ui.html"
 java -javaagent:holmes-agent.jar -jar holmes-demo.jar
 ```
 
-## 编译 ##
+## Build ##
 ```
-// 拷贝代码到本地
+// clone the code
 git clone https://github.com/Jeffery1993/holmes-java-agent.git
-// 首先进入web目录下
+// goto the web module
 cd holmes-java-agent/server/src/main/web
-// 编译前端依赖
+// install web dependencies
 npm install
-// 前端出包
+// build the web module
 npm run build
-// 复制dist下文件到静态资源文件下
+// copy all the files from dist to resource directory
 mv dist/* ../resources/common/static
 
-// 返回根目录
+// goto the root directory
 cd holmes-java-agent
-// 整个工程出包，在packaging模块的target目录下
+// build the whole project
 mvn clean install
 ```

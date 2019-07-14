@@ -1,53 +1,35 @@
 {
   "hits": [
     {
-      "traceId": "demo-1024-1",
-      "url": "/api/car",
+      "spanId": "1",
+      "traceId": "demo-10964-1",
+      "usedTime": 128,
+      "code": 200,
       "method": "GET",
-      "startTime": "2019-06-16 13:48:00"
+      "startTime": "2019-07-07 14:46:44",
+      "error": false,
+      "url": "/api/caller/cars"
     },
     {
-      "traceId": "demo-1024-2",
-      "url": "/api/car",
-      "method": "POST",
-      "startTime": "2019-06-17 13:48:00"
-    },
-    {
-      "traceId": "demo-1024-3",
-      "url": "/api/car",
-      "method": "DELETE",
-      "startTime": "2019-06-18 13:48:00"
-    },
-    {
-      "traceId": "demo-1024-4",
-      "url": "/api/car",
-      "method": "PUT",
-      "startTime": "2019-06-19 13:48:00"
-    },
-    {
-      "traceId": "demo-1024-5",
-      "url": "/api/car",
+      "spanId": "1",
+      "traceId": "demo-10964-2",
+      "usedTime": 7,
+      "code": 200,
       "method": "GET",
-      "startTime": "2019-06-20 13:48:00"
+      "startTime": "2019-07-07 14:46:45",
+      "error": false,
+      "url": "/api/caller/cars"
     },
     {
-      "traceId": "demo-1024-6",
-      "url": "/api/car",
-      "method": "POST",
-      "startTime": "2019-06-21 13:48:00"
-    },
-    {
-      "traceId": "demo-1024-7",
-      "url": "/api/car",
-      "method": "DELETE",
-      "startTime": "2019-06-22 13:48:00"
-    },
-    {
-      "traceId": "demo-1024-8",
-      "url": "/api/car",
-      "method": "PUT",
-      "startTime": "2019-06-23 13:48:00"
+      "spanId": "1",
+      "traceId": "demo-10964-3",
+      "usedTime": 7,
+      "code": 200,
+      "method": "GET",
+      "startTime": "2019-07-07 14:46:46",
+      "error": false,
+      "url": "/api/caller/cars"
     }
   ],
-  "total": 8
+  "total": 3
 }

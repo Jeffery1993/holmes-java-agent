@@ -4,4 +4,10 @@ public interface View {
 
     String getTitle();
 
+    Type getType();
+
+    enum Type {
+        table, graph;
+    }
+
 }

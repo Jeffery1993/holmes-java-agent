@@ -16,14 +16,16 @@
                 <el-input v-model="traceId" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="getSpanData">搜索</el-button>
             </div>
-            <el-table :data="spanData" border class="table" ref="multipleTable">
+            <el-table :data="spanData" border>
                 <el-table-column prop="traceId" label="traceId" align="center"></el-table-column>
                 <el-table-column prop="url" label="url" align="center"></el-table-column>
                 <el-table-column prop="method" label="method" align="center"></el-table-column>
                 <el-table-column prop="startTime" label="开始时间" sortable align="center"></el-table-column>
+                <el-table-column prop="usedTime" label="耗时" sortable align="center"></el-table-column>
+                <el-table-column prop="code" label="状态码" align="center"></el-table-column>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-view" @click="showDetails(scope.$index)">查看
+                        <el-button type="text" icon="el-icon-view" @click="showDetails(scope.$index)">查看详情
                         </el-button>
                     </template>
                 </el-table-column>
@@ -43,9 +45,10 @@
 
         <!-- 查看调用链详情弹出框 -->
         <el-dialog :title="selectedTraceId" :visible.sync="detailsVisible" width="80%">
-            <el-table :data="spanEventData" border class="table" ref="multipleTable">
-                <el-table-column prop="className" label="类名" width="350" align="center"></el-table-column>
+            <el-table :data="spanEventData" border>
+                <el-table-column prop="className" label="类名" align="center"></el-table-column>
                 <el-table-column prop="methodName" label="方法名" align="center"></el-table-column>
+                <el-table-column prop="argument" label="参数" align="center"></el-table-column>
                 <el-table-column prop="eventType" label="类型" align="center"></el-table-column>
                 <el-table-column prop="spanId" label="spanId" sortable align="center"></el-table-column>
                 <el-table-column prop="spanEventId" label="spanEventId" sortable align="center"></el-table-column>
@@ -87,11 +90,6 @@
             this.getClusters();
             this.getApps();
             this.getSpanData();
-        },
-        computed: {
-            spanData() {
-                return this.spanData;
-            }
         },
         methods: {
             // 获取cluster数据
@@ -203,11 +201,19 @@
         display: inline-block;
     }
 
+    .mr10 {
+        margin-right: 10px;
+    }
+
     .trace {
         width: 100%;
     }
 
-    .mr10 {
-        margin-right: 10px;
+    .el-table--border, .el-table--group {
+        border-color: #6a6a6a;
+    }
+
+    .el-table--border::after, .el-table--group::after, .el-table::before {
+        background: #6a6a6a;
     }
 </style>

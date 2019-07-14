@@ -2,6 +2,7 @@ package com.jeffery.holmes.server.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jeffery.holmes.server.consts.FieldConsts;
+import com.jeffery.holmes.server.util.DateUtils;
 import org.apache.lucene.search.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -36,7 +37,13 @@ public class TraceApiService extends AbstractService {
         TopDocs topDocs = indexSearcher.search(query, page * pageSize);
         JSONObject res = new JSONObject();
         res.put("total", topDocs.totalHits);
-        List<JSONObject> hits = toObjectList(topDocs.scoreDocs, (page - 1) * pageSize, page * pageSize);
+        List<JSONObject> hits = toObjectList(topDocs.scoreDocs, (page - 1) * pageSize, page * pageSize).stream()
+//                .filter(m -> "1".equals(m.getString("spanId")))
+                .map(m -> {
+                    m.put("startTime", DateUtils.format(m.getLongValue("startTime")));
+                    return m;
+                })
+                .collect(Collectors.toList());
         res.put("hits", hits);
         return res;
     }
@@ -74,11 +81,14 @@ public class TraceApiService extends AbstractService {
         IndexSearcher indexSearcher = getIndexSearcher();
         TopDocs topDocs = indexSearcher.search(query, DEFAULT_MAX_HITS_FOR_TRACE);
         JSONObject res = new JSONObject();
-        List<JSONObject> hits = toObjectList(topDocs.scoreDocs)
-                .stream()
+        List<JSONObject> hits = toObjectList(topDocs.scoreDocs).stream()
                 .map(m -> new SpanEventWrapper(m))
                 .sorted()
                 .map(SpanEventWrapper::getBody)
+                .map(m -> {
+                    m.put("startTime", DateUtils.format(m.getLongValue("startTime"), true));
+                    return m;
+                })
                 .collect(Collectors.toList());
         res.put("hits", hits);
         return res;

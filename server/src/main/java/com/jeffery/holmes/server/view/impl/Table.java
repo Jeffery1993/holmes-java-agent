@@ -22,6 +22,11 @@ public class Table implements View {
         return title;
     }
 
+    @Override
+    public Type getType() {
+        return Type.table;
+    }
+
     public List<Column> getColumns() {
         return columns;
     }

@@ -1,59 +1,62 @@
 {
   "hits": [
     {
-      "className": "org/apache/http/impl/client/InternalHttpClient",
+      "spanId": "1",
+      "traceId": "demo-10964-1",
+      "argument": "/api/caller/cars",
+      "spanEventId": "1",
+      "usedTime": 128,
+      "methodName": "invoke",
+      "className": "org/apache/catalina/core/StandardHostValve",
+      "startTime": "2019-07-07 14:46:44.701",
+      "eventType": "Tomcat",
       "error": false,
-      "eventType": "HttpClient",
-      "methodName": "doExecute",
+      "parameters": {
+        "method": "GET"
+      }
+    },
+    {
       "nextSpanId": "1-1",
-      "parameters": {
-        "method": "GET"
-      },
+      "spanId": "1",
+      "traceId": "demo-10964-1",
+      "argument": "http://localhost:1234/api/callee/cars?page=1&pageSize=10",
       "spanEventId": "1-1",
-      "spanId": "1",
-      "startTime": 1559738975803,
-      "traceId": "demo-1024-1",
-      "usedTime": 4
-    },
-    {
-      "className": "org/apache/catalina/core/StandardHostValve",
+      "usedTime": 62,
+      "methodName": "doExecute",
+      "className": "org/apache/http/impl/client/InternalHttpClient",
+      "startTime": "2019-07-07 14:46:44.740",
+      "eventType": "HttpClient",
       "error": false,
-      "eventType": "Tomcat",
-      "methodName": "invoke",
       "parameters": {
         "method": "GET"
-      },
-      "spanEventId": "1",
+      }
+    },
+    {
       "spanId": "1-1",
-      "startTime": 1559738975804,
-      "traceId": "demo-1024-1",
-      "usedTime": 3
-    },
-    {
-      "className": "org/apache/catalina/core/StandardHostValve",
-      "error": false,
-      "eventType": "Tomcat",
+      "traceId": "demo-10964-1",
+      "argument": "/api/callee/cars",
+      "spanEventId": "1",
+      "usedTime": 35,
       "methodName": "invoke",
+      "className": "org/apache/catalina/core/StandardHostValve",
+      "startTime": "2019-07-07 14:46:44.761",
+      "eventType": "Tomcat",
+      "error": false,
       "parameters": {
         "method": "GET"
-      },
-      "spanEventId": "1",
-      "spanId": "1",
-      "startTime": 1559738975802,
-      "traceId": "demo-1024-1",
-      "usedTime": 6
+      }
     },
     {
-      "className": "com/mysql/jdbc/PreparedStatement",
-      "error": false,
-      "eventType": "Mysql",
+      "spanId": "1-1",
+      "traceId": "demo-10964-1",
+      "argument": "select * from car_info limit ? offset ?",
+      "spanEventId": "1-1",
+      "usedTime": 1,
       "methodName": "executeQuery",
-      "spanEventId": "1-1",
-      "spanId": "1-1",
-      "startTime": 1559738975805,
-      "traceId": "demo-1024-1",
-      "usedTime": 0
+      "className": "com/mysql/jdbc/PreparedStatement",
+      "startTime": "2019-07-07 14:46:44.766",
+      "eventType": "Mysql",
+      "error": false
     }
-  ],
-  "total": 4
+  ]
 }

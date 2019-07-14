@@ -21,6 +21,11 @@ public class Graph implements View {
         return title;
     }
 
+    @Override
+    public Type getType() {
+        return Type.graph;
+    }
+
     public List<String> getTimeSeries() {
         return timeSeries;
     }
