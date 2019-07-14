@@ -39,7 +39,7 @@ cd holmes-java-agent
 // 启动服务端，浏览器访问"http://localhost:8080"
 java -jar holmes-server.jar
 // 启动demo程序，浏览器访问"http://localhost:1234/swagger-ui.html"
-java -javaagent:holmes-agent.jar -jar holmes-demo.jar
+java -javaagent:holmes-agent.jar -DclusterId=demo -jar holmes-demo.jar
 ```
 
 ## 编译 ##

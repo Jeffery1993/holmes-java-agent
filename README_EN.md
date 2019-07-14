@@ -39,7 +39,7 @@ cd holmes-java-agent
 // start the server and visit "http://localhost:8080"
 java -jar holmes-server.jar
 // start the demo with agent and visit "http://localhost:1234/swagger-ui.html"
-java -javaagent:holmes-agent.jar -jar holmes-demo.jar
+java -javaagent:holmes-agent.jar -DclusterId=demo -jar holmes-demo.jar
 ```
 
 ## Build ##

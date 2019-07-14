@@ -3,17 +3,19 @@
         <div class="container">
             <div class="handle-box">
                 <el-button>集群ID</el-button>
-                <el-select v-model="clusterId" placeholder="可选" class="handle-select mr10">
+                <el-select v-model="clusterId" placeholder="可选" class="handle-select mr10"
+                           @focus="getClusters" @change="appId=''">
                     <el-option key="" label="" value=""></el-option>
                     <el-option v-for="m in clusterIds" :key="m" :label="m" :value="m"></el-option>
                 </el-select>
                 <el-button>应用ID</el-button>
-                <el-select v-model="appId" placeholder="可选" class="handle-select mr10">
+                <el-select v-model="appId" placeholder="可选" class="handle-select mr10"
+                           @focus="getApps">
                     <el-option key="" label="" value=""></el-option>
                     <el-option v-for="m in appIds" :key="m" :label="m" :value="m"></el-option>
                 </el-select>
                 <el-button>调用链id</el-button>
-                <el-input v-model="traceId" class="handle-input mr10"></el-input>
+                <el-input v-model="traceId" class="handle-input mr10" @change="getSpanData"></el-input>
                 <el-button type="primary" icon="search" @click="getSpanData">搜索</el-button>
             </div>
             <el-table :data="spanData" border>
@@ -87,8 +89,6 @@
             }
         },
         created() {
-            this.getClusters();
-            this.getApps();
             this.getSpanData();
         },
         methods: {
@@ -193,7 +193,7 @@
     }
 
     .handle-select {
-        width: 120px;
+        width: 150px;
     }
 
     .handle-input {

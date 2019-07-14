@@ -3,18 +3,25 @@
         <div class="container">
             <div class="handle-box">
                 <el-button>集群ID</el-button>
-                <el-select v-model="clusterId" placeholder="请选择集群" class="handle-select mr10">
+                <el-select v-model="clusterId" placeholder="请选择集群" class="handle-select mr10"
+                           @focus="getClusters" @change="appId=''">
                     <el-option key="" label="" value=""></el-option>
                     <el-option v-for="m in clusterIds" :key="m" :label="m" :value="m"></el-option>
                 </el-select>
                 <el-button>应用ID</el-button>
-                <el-select v-model="appId" placeholder="请选择应用" class="handle-select mr10">
+                <el-select v-model="appId" placeholder="请选择应用" class="handle-select mr10"
+                           @focus="getApps">
                     <el-option v-for="m in appIds" :key="m" :label="m" :value="m"></el-option>
                 </el-select>
                 <el-button>采集器</el-button>
-                <el-select v-model="collector" placeholder="请选择采集器" class="handle-select mr10">
+                <el-select v-model="collector" placeholder="请选择采集器" class="handle-select mr10"
+                           @change="getMonitorData">
                     <el-option v-for="m in collectors" :key="m" :label="m" :value="m"></el-option>
                 </el-select>
+                <el-date-picker v-model="timerange" type="datetimerange" :picker-options="pickerOptions"
+                                start-placeholder="开始时间" range-separator="至" end-placeholder="结束时间"
+                                @change="getMonitorData">
+                </el-date-picker>
                 <el-button type="primary" icon="search" @click="getMonitorData">搜索</el-button>
             </div>
             <div class="wrap">
@@ -55,12 +62,46 @@
                 appIds: [],
                 collector: '',
                 collectors: [],
+                timerange: [],
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '最近20分钟',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 20 * 60 * 1000);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近1小时',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近3小时',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3 * 3600 * 1000);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近12小时',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 12 * 3600 * 1000);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
                 monitorData: []
             }
         },
         created() {
-            this.getClusters();
-            this.getApps();
             this.getCollectors();
         },
         methods: {
@@ -157,6 +198,23 @@
             },
             // 获取监控数据
             getMonitorData() {
+                if (!this.appId) {
+                    this.$notify({
+                        title: '注意',
+                        message: '应用id为必选字段！',
+                        type: 'warning',
+                        duration: 3000
+                    });
+                    return;
+                } else if (!this.collector) {
+                    this.$notify({
+                        title: '注意',
+                        message: '采集器为必选字段！',
+                        type: 'warning',
+                        duration: 3000
+                    });
+                    return;
+                }
                 // 开发环境使用json假数据
                 if (process.env.NODE_ENV === 'development') {
                     let realUrl = './mock/monitorData.json';
@@ -164,9 +222,10 @@
                         this.monitorData = res.data.views;
                     })
                 } else {
-                    let realUrl = this.monitorUrl;
-                    if (this.appId) {
-                        realUrl += '?appId=' + this.appId;
+                    let realUrl = this.monitorUrl + '?appId=' + this.appId + '&collector=' + this.collector;
+                    if (this.timerange && this.timerange.length == 2) {
+                        realUrl += "&startTime=" + this.timerange[0].getTime();
+                        realUrl += "&endTime=" + this.timerange[1].getTime();
                     }
                     this.$axios.get(realUrl).then((res) => {
                         this.monitorData = res.data.views;
@@ -181,6 +240,10 @@
 <style scoped>
     .handle-box {
         margin-bottom: 20px;
+    }
+
+    .handle-select {
+        width: 150px;
     }
 
     .mr10 {

@@ -69,7 +69,11 @@ public class StandardHostValveTransformer extends AccurateMatchedTransformer {
 
         StringBuilder afterCode = new StringBuilder();
         afterCode.append("{");
-        afterCode.append("    " + TRACE_COLLECTOR_CLASS_NAME + ".end($2.getStatus());");
+        afterCode.append("    int code = 0;");
+        afterCode.append("    if ($2 != null) {");
+        afterCode.append("        code = $2.getStatus();");
+        afterCode.append("    }");
+        afterCode.append("    " + TRACE_COLLECTOR_CLASS_NAME + ".end(code);");
         afterCode.append("    " + URL_COLLECTOR_NAME + ".onFinally();");
         afterCode.append("}");
         ctMethod.insertAfter(afterCode.toString(), true);

@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,27 +28,29 @@ public class ViewConfigManager {
 
     @PostConstruct
     public void init() {
-        parseXmls();
+        parseViewConfigs();
     }
 
-    private void parseXmls() {
-        File viewDir = new File("server/src/main/resources/common/view");
-        LOGGER.debug(viewDir.getAbsolutePath());
-        if (viewDir.exists() && viewDir.isDirectory()) {
-            for (File file : viewDir.listFiles()) {
-                LOGGER.debug(file.getAbsolutePath());
+    private void parseViewConfigs() {
+        LOGGER.info("Start to parse view configs");
+        for (CollectorEnum collector : CollectorEnum.values()) {
+            String xmlPath = "/view/" + collector + ".xml";
+            InputStream inputStream = ViewConfigManager.class.getResourceAsStream(xmlPath);
+            if (inputStream == null) {
+                LOGGER.error("Could not find view config for collector [" + collector + "]");
+            } else {
                 try {
-                    parseXml(file);
+                    parseViewConfig(inputStream);
                 } catch (Exception e) {
-                    LOGGER.warn(e.getMessage());
+                    LOGGER.error("Failed to parse view config for collector [" + collector + "], " + e.getMessage());
                 }
             }
         }
     }
 
-    private void parseXml(File xml) throws Exception {
+    private void parseViewConfig(InputStream inputStream) throws Exception {
         DocumentBuilder db = documentBuilderFactory.newDocumentBuilder();
-        Document document = db.parse(xml);
+        Document document = db.parse(inputStream);
         Element root = document.getDocumentElement();
         String collector = root.getAttribute("collector");
         CollectorEnum collectorEnum = CollectorEnum.valueOf(collector);
@@ -65,7 +67,7 @@ public class ViewConfigManager {
                 try {
                     viewConfigs.add(ViewConfig.parse((Element) child));
                 } catch (Exception e) {
-                    LOGGER.warn("Failed to parse view config: " + e.getMessage(), e);
+                    LOGGER.warn("Failed to parse view element [" + child.toString() + "], " + e.getMessage());
                 }
             }
         }
