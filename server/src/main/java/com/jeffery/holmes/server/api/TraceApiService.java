@@ -38,7 +38,6 @@ public class TraceApiService extends AbstractService {
         JSONObject res = new JSONObject();
         res.put("total", topDocs.totalHits);
         List<JSONObject> hits = toObjectList(topDocs.scoreDocs, (page - 1) * pageSize, page * pageSize).stream()
-//                .filter(m -> "1".equals(m.getString("spanId")))
                 .map(m -> {
                     m.put("startTime", DateUtils.format(m.getLongValue("startTime")));
                     return m;
@@ -94,6 +93,9 @@ public class TraceApiService extends AbstractService {
         return res;
     }
 
+    /**
+     * Wrapped class of span event for sake of ordering.
+     */
     static final class SpanEventWrapper implements Comparable<SpanEventWrapper> {
 
         private final JSONObject body;

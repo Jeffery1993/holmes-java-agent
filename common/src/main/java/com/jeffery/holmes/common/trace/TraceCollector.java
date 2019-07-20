@@ -88,6 +88,9 @@ public class TraceCollector {
             if (spanEvent.takeParent() == null) {
                 span.setUsedTime(usedTime);
                 span.setCode(code);
+                if (code >= 500) {
+                    span.setError(true);
+                }
                 SPAN_EVENT_THREAD_LOCAL.set(null);
                 TRACE_BLOCKING_QUEUE.offer(span);
             } else {

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
+/**
+ * A stream of collector data.
+ */
 public class CollectorDataStream {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CollectorDataStream.class);

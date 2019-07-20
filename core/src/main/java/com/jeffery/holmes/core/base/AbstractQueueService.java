@@ -22,6 +22,7 @@ public abstract class AbstractQueueService<T> implements Service {
     public void start() {
         for (int i = 0; i < getNumberOfConsumers(); i++) {
             consumers[i] = new Thread(getConsumeTask(), getConsumerName() + "-thread-" + i);
+            consumers[i].setDaemon(true);
             consumers[i].start();
         }
     }

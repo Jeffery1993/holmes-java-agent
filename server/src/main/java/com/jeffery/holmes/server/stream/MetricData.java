@@ -4,6 +4,11 @@ import com.jeffery.holmes.server.view.impl.TableConfig;
 
 import java.util.HashMap;
 
+/**
+ * Metric data.
+ *
+ * <p>Consists of a map of metrics.</p>
+ */
 public class MetricData extends HashMap<String, Object> {
 
     public TableConfig.Tuple primaryKey(TableConfig.Tuple groupBy) {

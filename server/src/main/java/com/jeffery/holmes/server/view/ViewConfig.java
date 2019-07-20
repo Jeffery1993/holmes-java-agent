@@ -7,6 +7,9 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
+/**
+ * Interface for view configuration.
+ */
 public interface ViewConfig {
 
     String getAggregator();

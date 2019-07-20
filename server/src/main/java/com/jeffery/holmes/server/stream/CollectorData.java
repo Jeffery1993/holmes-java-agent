@@ -3,6 +3,11 @@ package com.jeffery.holmes.server.stream;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * Collector data.
+ *
+ * <p>Contains name, timestamp and aggregators.</p>
+ */
 public class CollectorData extends JSONObject implements Comparable<CollectorData> {
 
     public String getName() {

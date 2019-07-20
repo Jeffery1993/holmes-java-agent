@@ -48,10 +48,11 @@ public class MonitorApiService extends AbstractService {
      * @param collector collector name
      * @param startTime start time
      * @param endTime   end time
+     * @param raw       raw data attached if true
      * @return monitor data
      * @throws Exception
      */
-    public JSONObject getMonitorData(String appId, CollectorEnum collector, Long startTime, Long endTime) throws Exception {
+    public JSONObject getMonitorData(String appId, CollectorEnum collector, Long startTime, Long endTime, boolean raw) throws Exception {
         Query query = buildQuery(appId, collector, startTime, endTime);
         Sort sort = new Sort(new SortField(FieldConsts.timestamp, SortField.Type.LONG));
         TopDocs topDocs = getIndexSearcher().search(query, DEFAULT_MAX_HITS_FOR_MONITOR, sort);
@@ -62,8 +63,10 @@ public class MonitorApiService extends AbstractService {
                 .toViewList();
         JSONObject res = new JSONObject();
         res.put("name", collector.toString());
-        res.put("hits", collectorDataList);
         res.put("views", views);
+        if (raw) {
+            res.put("hits", collectorDataList);
+        }
         return res;
     }
 

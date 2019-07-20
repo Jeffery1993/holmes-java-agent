@@ -5,6 +5,9 @@ import com.jeffery.holmes.server.view.FieldConfig;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
+/**
+ * Configuration for graph field.
+ */
 public class GraphFieldConfig implements FieldConfig {
 
     private String name;

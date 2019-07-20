@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Configuration for table field.
+ */
 public class TableFieldConfig implements FieldConfig {
 
     private Function function;

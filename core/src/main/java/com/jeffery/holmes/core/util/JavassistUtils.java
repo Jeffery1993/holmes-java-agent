@@ -47,8 +47,9 @@ public class JavassistUtils {
      * @param loader    classloader provided
      * @return {@link CtClass} associated with the class name provided
      * @throws NotFoundException
+     * @throws ClassNotFoundException
      */
-    public static CtClass getCtClass(String className, ClassLoader loader) throws ClassNotFoundException, NotFoundException {
+    public static CtClass getCtClass(String className, ClassLoader loader) throws NotFoundException, ClassNotFoundException {
         try {
             return CLASS_POOL.get(className);
         } catch (NotFoundException e) {
@@ -76,11 +77,12 @@ public class JavassistUtils {
      * @param classNames class names provided
      * @return array of {@link CtClass}(s) associated with the class names provided
      * @throws NotFoundException
+     * @throws ClassNotFoundException
      */
-    public static CtClass[] buildParams(String... classNames) throws NotFoundException {
+    public static CtClass[] buildParams(ClassLoader loader, String... classNames) throws NotFoundException, ClassNotFoundException {
         CtClass[] params = new CtClass[classNames.length];
         for (int i = 0; i < classNames.length; i++) {
-            params[i] = getCtClass(classNames[i]);
+            params[i] = getCtClass(classNames[i], loader);
         }
         return params;
     }

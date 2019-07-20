@@ -56,7 +56,7 @@
       "className": "com/mysql/jdbc/PreparedStatement",
       "startTime": "2019-07-07 14:46:44.766",
       "eventType": "Mysql",
-      "error": false
+      "error": true
     }
   ]
 }

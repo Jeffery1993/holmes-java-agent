@@ -6,7 +6,7 @@ import com.jeffery.holmes.server.index.IndexableTraceData;
 import org.apache.lucene.document.Document;
 
 /**
- * Message that can be transformed to {@link Document};
+ * Message that can be transformed to {@link Document}.
  */
 public class Message implements Indexable {
 

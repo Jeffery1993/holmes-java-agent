@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Configuration for graph.
+ */
 public class GraphConfig implements ViewConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GraphConfig.class);

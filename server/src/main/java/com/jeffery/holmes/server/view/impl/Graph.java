@@ -6,6 +6,9 @@ import com.jeffery.holmes.server.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A graph is usually a representation of data in time series.
+ */
 public class Graph implements View {
 
     private final String title;

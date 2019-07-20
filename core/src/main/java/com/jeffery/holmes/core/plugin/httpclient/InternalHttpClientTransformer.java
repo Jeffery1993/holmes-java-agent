@@ -31,7 +31,7 @@ public class InternalHttpClientTransformer extends AccurateMatchedTransformer {
         CollectorManager.register(HttpClientCollector.getInstance());
         HttpClientCollector.getInstance().setVersion(protectionDomain.getCodeSource());
         try {
-            CtClass[] params = JavassistUtils.buildParams("org.apache.http.HttpHost", "org.apache.http.HttpRequest", "org.apache.http.protocol.HttpContext");
+            CtClass[] params = JavassistUtils.buildParams(loader, "org.apache.http.HttpHost", "org.apache.http.HttpRequest", "org.apache.http.protocol.HttpContext");
             CtMethod doExecuteMethod = ctClass.getDeclaredMethod("doExecute", params);
             enhanceCtMethod(className, doExecuteMethod);
         } catch (Exception e) {

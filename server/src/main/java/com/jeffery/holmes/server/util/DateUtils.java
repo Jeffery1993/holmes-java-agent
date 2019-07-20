@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Utility for processing date.
+ */
 public class DateUtils {
 
     public static final String DEFAULT_LONG_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";

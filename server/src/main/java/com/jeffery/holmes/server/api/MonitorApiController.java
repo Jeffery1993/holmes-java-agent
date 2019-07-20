@@ -56,9 +56,10 @@ public class MonitorApiController {
     public JSONObject getMonitorData(@RequestParam(required = true) String appId,
                                      @RequestParam(required = true) CollectorEnum collector,
                                      @RequestParam(required = false) Long startTime,
-                                     @RequestParam(required = false) Long endTime) {
+                                     @RequestParam(required = false) Long endTime,
+                                     @RequestParam(required = false) boolean raw) {
         try {
-            return monitorApiService.getMonitorData(appId, collector, startTime, endTime);
+            return monitorApiService.getMonitorData(appId, collector, startTime, endTime, raw);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }

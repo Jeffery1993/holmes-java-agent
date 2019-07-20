@@ -30,7 +30,7 @@ public class StandardHostValveTransformer extends AccurateMatchedTransformer {
         CollectorManager.register(UrlCollector.getInstance());
         UrlCollector.getInstance().setVersion(protectionDomain.getCodeSource());
         try {
-            CtClass[] params = JavassistUtils.buildParams("org.apache.catalina.connector.Request", "org.apache.catalina.connector.Response");
+            CtClass[] params = JavassistUtils.buildParams(loader, "org.apache.catalina.connector.Request", "org.apache.catalina.connector.Response");
             CtMethod ctMethod = ctClass.getDeclaredMethod("invoke", params);
             enhanceCtMethod(className, ctMethod);
         } catch (Exception e) {

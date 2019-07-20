@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A graph is usually a representation of data in matrix format.
+ */
 public class Table implements View {
 
     private final String title;

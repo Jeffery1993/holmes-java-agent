@@ -25,12 +25,12 @@
                 <el-button type="primary" icon="search" @click="getMonitorData">搜索</el-button>
             </div>
             <div class="wrap">
-                <div class="half" v-for="aggregator in monitorData">
+                <div :class="monitorData.length > 3 ? 'half' : 'whole'" v-for="aggregator in monitorData">
                     <div class="view">
                         <el-divider></el-divider>
                         <div v-if="aggregator.type==='table'">
                             <h3>{{aggregator.title}}</h3>
-                            <el-table :data="aggregator.data">
+                            <el-table :data="aggregator.data" border>
                                 <el-table-column v-for="(column, index) in aggregator.columns" :key="index"
                                                  :prop="column.prop" :label="column.label"
                                                  align="center"></el-table-column>
@@ -217,7 +217,7 @@
                 }
                 // 开发环境使用json假数据
                 if (process.env.NODE_ENV === 'development') {
-                    let realUrl = './mock/monitorData.json';
+                    let realUrl = './mock/monitorData1.json';
                     this.$axios.get(realUrl).then((res) => {
                         this.monitorData = res.data.views;
                     })
@@ -257,7 +257,10 @@
     .wrap {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+    }
+
+    .whole {
+        width: 100%;
     }
 
     .half {

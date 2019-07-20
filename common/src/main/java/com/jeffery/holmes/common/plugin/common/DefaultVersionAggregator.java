@@ -18,11 +18,24 @@ public class DefaultVersionAggregator extends AbstractAggregator {
 
     public void setVersion(CodeSource codeSource) {
         String path = codeSource.getLocation().getPath();
-        int index;
-        if ((index = path.lastIndexOf("/")) > 0) {
-            path = path.substring(index + 1);
+        this.version = extract(path);
+    }
+
+    /**
+     * Extract jar file from path.
+     *
+     * @param path path of code source
+     * @return jar file name
+     */
+    static String extract(String path) {
+        int jar = path.lastIndexOf("jar");
+        if (jar > 0) {
+            int dash = path.lastIndexOf("/", jar);
+            if (dash > 0 && dash < jar) {
+                return path.substring(dash + 1, jar + 3);
+            }
         }
-        this.version = path;
+        return path;
     }
 
     @Override

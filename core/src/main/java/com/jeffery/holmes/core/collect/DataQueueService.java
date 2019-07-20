@@ -52,7 +52,7 @@ public class DataQueueService extends AbstractQueueService<Map<String, Object>> 
                         message.addHeader("timestamp", item.get("timestamp"));
                         TransferService.transfer(message);
                     } catch (InterruptedException e) {
-                        // ignore
+                        return;
                     }
                 }
             }

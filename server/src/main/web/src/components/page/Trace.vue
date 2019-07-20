@@ -18,13 +18,14 @@
                 <el-input v-model="traceId" class="handle-input mr10" @change="getSpanData"></el-input>
                 <el-button type="primary" icon="search" @click="getSpanData">搜索</el-button>
             </div>
-            <el-table :data="spanData" border>
-                <el-table-column prop="traceId" label="traceId" align="center"></el-table-column>
+            <el-table :data="spanData" border highlight-current-row>
+                <el-table-column prop="traceId" label="traceId" sortable align="center"></el-table-column>
                 <el-table-column prop="url" label="url" align="center"></el-table-column>
                 <el-table-column prop="method" label="method" align="center"></el-table-column>
                 <el-table-column prop="startTime" label="开始时间" sortable align="center"></el-table-column>
                 <el-table-column prop="usedTime" label="耗时" sortable align="center"></el-table-column>
                 <el-table-column prop="code" label="状态码" align="center"></el-table-column>
+                <el-table-column prop="error" label="错误" align="center" :formatter="formatBoolean"></el-table-column>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-view" @click="showDetails(scope.$index)">查看详情
@@ -46,16 +47,18 @@
         </div>
 
         <!-- 查看调用链详情弹出框 -->
-        <el-dialog :title="selectedTraceId" :visible.sync="detailsVisible" width="80%">
-            <el-table :data="spanEventData" border>
-                <el-table-column prop="className" label="类名" align="center"></el-table-column>
-                <el-table-column prop="methodName" label="方法名" align="center"></el-table-column>
+        <el-dialog :title="'调用链 '+selectedTraceId" :visible.sync="detailsVisible" width="80%">
+            <el-table :data="spanEventData" border highlight-current-row>
+                <el-table-column prop="className" label="类名" align="center" width="300"></el-table-column>
+                <el-table-column prop="methodName" label="方法名" align="center" width="100"></el-table-column>
                 <el-table-column prop="argument" label="参数" align="center"></el-table-column>
-                <el-table-column prop="eventType" label="类型" align="center"></el-table-column>
-                <el-table-column prop="spanId" label="spanId" sortable align="center"></el-table-column>
-                <el-table-column prop="spanEventId" label="spanEventId" sortable align="center"></el-table-column>
-                <el-table-column prop="startTime" label="开始时间" sortable align="center"></el-table-column>
-                <el-table-column prop="usedTime" label="耗时" sortable align="center"></el-table-column>
+                <el-table-column prop="eventType" label="类型" align="center" width="100"></el-table-column>
+                <el-table-column prop="spanId" label="spanId" align="center" width="80"></el-table-column>
+                <el-table-column prop="spanEventId" label="spanEventId" align="center" width="80"></el-table-column>
+                <el-table-column prop="startTime" label="开始时间" sortable align="center" width="200"></el-table-column>
+                <el-table-column prop="usedTime" label="耗时" sortable align="center" width="80"></el-table-column>
+                <el-table-column prop="error" label="错误" align="center" width="80"
+                                 :formatter="formatBoolean"></el-table-column>
             </el-table>
         </el-dialog>
 
@@ -181,6 +184,10 @@
                         this.spanEventData = res.data.hits;
                     })
                 }
+            },
+            // 格式化布尔值
+            formatBoolean: function (row, column, cellValue) {
+                return cellValue ? '是' : '否';
             }
         }
     }

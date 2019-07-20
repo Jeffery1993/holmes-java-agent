@@ -17,6 +17,9 @@ import org.w3c.dom.NodeList;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Configuration for table.
+ */
 public class TableConfig implements ViewConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TableConfig.class);

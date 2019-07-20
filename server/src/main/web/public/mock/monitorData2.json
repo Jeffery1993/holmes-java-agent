@@ -1,0 +1,251 @@
+{
+  "name": "Url",
+  "views": [
+    {
+      "title": "Url监控",
+      "columns": [
+        {
+          "prop": "url",
+          "label": "url"
+        },
+        {
+          "prop": "method",
+          "label": "method"
+        },
+        {
+          "prop": "SUM(invokeCount)",
+          "label": "调用次数"
+        },
+        {
+          "prop": "SUM(errorCount)",
+          "label": "错误次数"
+        },
+        {
+          "prop": "SUM(totalTime)",
+          "label": "总时间(ms)"
+        },
+        {
+          "prop": "MAX(maxTime)",
+          "label": "最大耗时(ms)"
+        },
+        {
+          "prop": "LAST(runningCount)",
+          "label": "当前并发"
+        },
+        {
+          "prop": "MAX(concurrentMax)",
+          "label": "最大并发"
+        },
+        {
+          "prop": "SUM(ms0_1)",
+          "label": "0-1ms"
+        },
+        {
+          "prop": "SUM(ms1_10)",
+          "label": "1-10ms"
+        },
+        {
+          "prop": "SUM(ms10_100)",
+          "label": "10-100ms"
+        },
+        {
+          "prop": "SUM(ms100_1000)",
+          "label": "100-1000ms"
+        },
+        {
+          "prop": "SUM(s1_10)",
+          "label": "1-10s"
+        },
+        {
+          "prop": "SUM(s10_n)",
+          "label": "10s以上"
+        }
+      ],
+      "data": [
+        {
+          "url": "/v2/api-docs",
+          "method": "GET",
+          "SUM(invokeCount)": 2,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 159,
+          "MAX(maxTime)": 145,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 0,
+          "SUM(ms1_10)": 0,
+          "SUM(ms10_100)": 1,
+          "SUM(ms100_1000)": 1,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/webjars/springfox-swagger-ui/fonts/droid-sans-v6-latin-regular.woff2",
+          "method": "GET",
+          "SUM(invokeCount)": 1,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 30,
+          "MAX(maxTime)": 30,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 0,
+          "SUM(ms1_10)": 0,
+          "SUM(ms10_100)": 1,
+          "SUM(ms100_1000)": 0,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/configuration/security",
+          "method": "GET",
+          "SUM(invokeCount)": 2,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 6,
+          "MAX(maxTime)": 5,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 1,
+          "SUM(ms1_10)": 1,
+          "SUM(ms10_100)": 0,
+          "SUM(ms100_1000)": 0,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/swagger-resources",
+          "method": "GET",
+          "SUM(invokeCount)": 1,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 90,
+          "MAX(maxTime)": 90,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 0,
+          "SUM(ms1_10)": 0,
+          "SUM(ms10_100)": 1,
+          "SUM(ms100_1000)": 0,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/swagger-ui.html",
+          "method": "GET",
+          "SUM(invokeCount)": 1,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 54,
+          "MAX(maxTime)": 54,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 0,
+          "SUM(ms1_10)": 0,
+          "SUM(ms10_100)": 1,
+          "SUM(ms100_1000)": 0,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/api/caller/cars",
+          "method": "GET",
+          "SUM(invokeCount)": 2,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 118,
+          "MAX(maxTime)": 112,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 0,
+          "SUM(ms1_10)": 1,
+          "SUM(ms10_100)": 0,
+          "SUM(ms100_1000)": 1,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/api/callee/cars",
+          "method": "GET",
+          "SUM(invokeCount)": 2,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 22,
+          "MAX(maxTime)": 20,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 0,
+          "SUM(ms1_10)": 1,
+          "SUM(ms10_100)": 1,
+          "SUM(ms100_1000)": 0,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/webjars/springfox-swagger-ui/fonts/droid-sans-v6-latin-700.woff2",
+          "method": "GET",
+          "SUM(invokeCount)": 1,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 30,
+          "MAX(maxTime)": 30,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 0,
+          "SUM(ms1_10)": 0,
+          "SUM(ms10_100)": 1,
+          "SUM(ms100_1000)": 0,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        },
+        {
+          "url": "/configuration/ui",
+          "method": "GET",
+          "SUM(invokeCount)": 2,
+          "SUM(errorCount)": 0,
+          "SUM(totalTime)": 5,
+          "MAX(maxTime)": 4,
+          "LAST(runningCount)": 0,
+          "MAX(concurrentMax)": 1,
+          "SUM(ms0_1)": 1,
+          "SUM(ms1_10)": 1,
+          "SUM(ms10_100)": 0,
+          "SUM(ms100_1000)": 0,
+          "SUM(s1_10)": 0,
+          "SUM(s10_n)": 0
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "title": "异常",
+      "columns": [
+        {
+          "prop": "exception",
+          "label": "exception"
+        },
+        {
+          "prop": "message",
+          "label": "message"
+        },
+        {
+          "prop": "SUM(count)",
+          "label": "异常次数"
+        },
+        {
+          "prop": "LAST(stackTrace)",
+          "label": "异常堆栈"
+        }
+      ],
+      "data": [],
+      "type": "table"
+    },
+    {
+      "title": "版本号",
+      "columns": [
+        {
+          "prop": "LAST(version)",
+          "label": "版本号"
+        }
+      ],
+      "data": [
+        {
+          "LAST(version)": "tomcat-embed-core-8.5.29.jar"
+        }
+      ],
+      "type": "table"
+    }
+  ]
+}

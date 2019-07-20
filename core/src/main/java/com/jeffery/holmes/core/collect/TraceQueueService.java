@@ -59,7 +59,7 @@ public class TraceQueueService extends AbstractQueueService<Object> {
                             TransferService.transfer(message);
                         }
                     } catch (InterruptedException e) {
-                        // ignore
+                        return;
                     }
                 }
             }
